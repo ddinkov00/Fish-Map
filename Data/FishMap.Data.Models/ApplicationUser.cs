@@ -16,6 +16,8 @@ namespace FishMap.Data.Models
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
+            this.GroupTrips = new HashSet<UserGroupTrip>();
+            this.Trips = new HashSet<Trip>();
         }
 
         // Audit info
@@ -33,5 +35,9 @@ namespace FishMap.Data.Models
         public virtual ICollection<IdentityUserClaim<string>> Claims { get; set; }
 
         public virtual ICollection<IdentityUserLogin<string>> Logins { get; set; }
+
+        public virtual ICollection<UserGroupTrip> GroupTrips { get; set; }
+
+        public virtual ICollection<Trip> Trips { get; set; }
     }
 }
