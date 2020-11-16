@@ -26,22 +26,6 @@
 
         public DbSet<Setting> Settings { get; set; }
 
-        public DbSet<Fish> Fish { get; set; }
-
-        public DbSet<FishSpecies> FishSpecies { get; set; }
-
-        public DbSet<GroupTrip> GroupTrips { get; set; }
-
-        public DbSet<Image> Images { get; set; }
-
-        public DbSet<Location> Locations { get; set; }
-
-        public DbSet<Trip> Trips { get; set; }
-
-        public DbSet<Town> Towns { get; set; }
-
-        public DbSet<UserGroupTrip> UserGroupTrips { get; set; }
-
         public override int SaveChanges() => this.SaveChanges(true);
 
         public override int SaveChanges(bool acceptAllChangesOnSuccess)
@@ -88,21 +72,6 @@
             {
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
-
-            builder.Entity<Trip>()
-                .HasOne(t => t.Location)
-                .WithOne(l => l.Trip)
-                .HasForeignKey<Location>(t => t.TripId);
-
-            builder.Entity<FishSpecies>()
-                .HasOne(fs => fs.Image)
-                .WithOne(i => i.FishKind)
-                .HasForeignKey<Image>(fs => fs.FishKindId);
-
-            builder.Entity<Town>()
-                .HasOne(t => t.Location)
-                .WithOne(l => l.Town)
-                .HasForeignKey<Location>(t => t.TownId);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

@@ -20,7 +20,6 @@
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using System.Text.Json;
 
     public static class Program
     {
@@ -53,9 +52,6 @@
         {
             var sw = Stopwatch.StartNew();
 
-            var jsonText = File.ReadAllText(@"C:\Users\dimit\source\repos\C# Web\Final Project\Tests\Sandbox\Towns.json");
-            var townsAsObjects = JsonSerializer.Deserialize<Towns>(jsonText);
-
             var settingsService = serviceProvider.GetService<ISettingsService>();
             Console.WriteLine($"Count of settings: {settingsService.GetCount()}");
 
@@ -86,15 +82,6 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-        }
-
-        private class Towns
-        {
-            public string city { get; set; }
-
-            public string lat { get; set; }
-
-            public string lng { get; set; }
         }
     }
 }
