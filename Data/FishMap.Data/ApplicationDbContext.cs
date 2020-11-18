@@ -102,7 +102,7 @@
             builder.Entity<Town>()
                 .HasOne(t => t.Location)
                 .WithOne(l => l.Town)
-                .HasForeignKey<Location>(t => t.TownId);
+                .HasForeignKey<Town>(t => t.LocationId);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishMap.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201113155901_BaseModelsCreated")]
+    [Migration("20201116163026_BaseModelsCreated")]
     partial class BaseModelsCreated
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -355,10 +355,6 @@ namespace FishMap.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("TownId")
-                        .IsUnique()
-                        .HasFilter("[TownId] IS NOT NULL");
-
                     b.HasIndex("TripId")
                         .IsUnique()
                         .HasFilter("[TripId] IS NOT NULL");
@@ -426,6 +422,9 @@ namespace FishMap.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("LocationId")
+                        .IsUnique();
 
                     b.ToTable("Towns");
                 });
@@ -655,13 +654,18 @@ namespace FishMap.Data.Migrations
                         .WithMany("Locations")
                         .HasForeignKey("GroupTripId");
 
-                    b.HasOne("FishMap.Data.Models.Town", "Town")
-                        .WithOne("Location")
-                        .HasForeignKey("FishMap.Data.Models.Location", "TownId");
-
                     b.HasOne("FishMap.Data.Models.Trip", "Trip")
                         .WithOne("Location")
                         .HasForeignKey("FishMap.Data.Models.Location", "TripId");
+                });
+
+            modelBuilder.Entity("FishMap.Data.Models.Town", b =>
+                {
+                    b.HasOne("FishMap.Data.Models.Location", "Location")
+                        .WithOne("Town")
+                        .HasForeignKey("FishMap.Data.Models.Town", "LocationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("FishMap.Data.Models.Trip", b =>

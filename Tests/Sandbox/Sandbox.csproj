@@ -43,4 +43,10 @@
     <ProjectReference Include="..\..\Services\FishMap.Services\FishMap.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Data\Towns.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

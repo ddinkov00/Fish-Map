@@ -1,7 +1,9 @@
 ﻿namespace FishMap.Web
 {
+    using System;
     using System.Reflection;
 
+    using CloudinaryDotNet;
     using FishMap.Data;
     using FishMap.Data.Common;
     using FishMap.Data.Common.Repositories;
@@ -37,7 +39,12 @@
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
-            services.AddDefaultIdentity<ApplicationUser>(IdentityOptionsProvider.GetIdentityOptions)
+            services.AddDefaultIdentity<ApplicationUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = false;
+                    options.Lockout.MaxFailedAccessAttempts = 5;
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                })
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.Configure<CookiePolicyOptions>(
@@ -64,6 +71,15 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+
+            Account account = new Account(
+                this.configuration["Cloudinary:AppName"],
+                this.configuration["Cloudinary:ApiKey"],
+                this.configuration["Cloudinary:ApiSecret"]);
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            services.AddSingleton(cloudinary);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

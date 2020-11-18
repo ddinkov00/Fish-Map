@@ -11,7 +11,7 @@
             this.Id = Guid.NewGuid().ToString();
         }
 
-        public string Extension { get; set; }
+        public string Uri { get; set; }
 
         public int? FishKindId { get; set; }
 

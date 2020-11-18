@@ -3,8 +3,11 @@
     using System;
     using System.Diagnostics;
     using System.IO;
+    using System.Linq;
+    using System.Text.Json;
     using System.Threading.Tasks;
 
+    using CommandLine;
     using FishMap.Data;
     using FishMap.Data.Common;
     using FishMap.Data.Common.Repositories;
@@ -13,14 +16,10 @@
     using FishMap.Data.Seeding;
     using FishMap.Services.Data;
     using FishMap.Services.Messaging;
-
-    using CommandLine;
-
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Logging;
-    using System.Text.Json;
 
     public static class Program
     {
@@ -52,9 +51,6 @@
         private static async Task<int> SandboxCode(SandboxOptions options, IServiceProvider serviceProvider)
         {
             var sw = Stopwatch.StartNew();
-
-            var jsonText = File.ReadAllText(@"C:\Users\dimit\source\repos\C# Web\Final Project\Tests\Sandbox\Towns.json");
-            var townsAsObjects = JsonSerializer.Deserialize<Towns>(jsonText);
 
             var settingsService = serviceProvider.GetService<ISettingsService>();
             Console.WriteLine($"Count of settings: {settingsService.GetCount()}");

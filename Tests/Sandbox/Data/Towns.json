@@ -1,0 +1,268 @@
+﻿[
+  {
+    "Name": "София",
+    "Location": {
+      "Latitude": 42.683334,
+      "Longtitude": 23.316668
+    }
+  },
+  {
+    "Name": "Пловдив",
+    "Location": {
+      "Latitude": 42.15,
+      "Longtitude": 24.75
+    }
+  },
+  {
+    "Name": "Варна",
+    "Location": {
+      "Latitude": 43.216667,
+      "Longtitude": 27.916668
+    }
+  },
+  {
+    "Name": "Бургас",
+    "Location": {
+      "Latitude": 42.506058,
+      "Longtitude": 27.46781
+    }
+  },
+  {
+    "Name": "Русе",
+    "Location": {
+      "Latitude": 43.856388,
+      "Longtitude": 25.970833
+    }
+  },
+  {
+    "Name": "Стара Загора",
+    "Location": {
+      "Latitude": 42.432777,
+      "Longtitude": 25.641945
+    }
+  },
+  {
+    "Name": "Плевен",
+    "Location": {
+      "Latitude": 43.416668,
+      "Longtitude": 24.616667
+    }
+  },
+  {
+    "Name": "Сливен",
+    "Location": {
+      "Latitude": 42.685833,
+      "Longtitude": 26.329166
+    }
+  },
+  {
+    "Name": "Добрич",
+    "Location": {
+      "Latitude": 43.566666,
+      "Longtitude": 27.833332
+    }
+  },
+  {
+    "Name": "Шумен",
+    "Location": {
+      "Latitude": 43.27667,
+      "Longtitude": 26.929167
+    }
+  },
+  {
+    "Name": "Перник",
+    "Location": {
+      "Latitude": 42.6,
+      "Longtitude": 23.033333
+    }
+  },
+  {
+    "Name": "Хасково",
+    "Location": {
+      "Latitude": 41.940277,
+      "Longtitude": 25.569445
+    }
+  },
+  {
+    "Name": "Враца",
+    "Location": {
+      "Latitude": 43.21,
+      "Longtitude": 23.5625
+    }
+  },
+  {
+    "Name": "Кюстендил",
+    "Location": {
+      "Latitude": 42.28389,
+      "Longtitude": 22.69111
+    }
+  },
+  {
+    "Name": "Монтана",
+    "Location": {
+      "Latitude": 43.4125,
+      "Longtitude": 23.225
+    }
+  },
+  {
+    "Name": "Ловеч",
+    "Location": {
+      "Latitude": 43.13333,
+      "Longtitude": 24.716667
+    }
+  },
+  {
+    "Name": "Разград",
+    "Location": {
+      "Latitude": 43.533333,
+      "Longtitude": 26.516666
+    }
+  },
+  {
+    "Name": "Мадан",
+    "Location": {
+      "Latitude": 41.498688,
+      "Longtitude": 24.939728
+    }
+  },
+  {
+    "Name": "Златоград",
+    "Location": {
+      "Latitude": 41.379498,
+      "Longtitude": 25.096052
+    }
+  },
+  {
+    "Name": "Пазарджик",
+    "Location": {
+      "Latitude": 42.2,
+      "Longtitude": 24.333332
+    }
+  },
+  {
+    "Name": "Смолян",
+    "Location": {
+      "Latitude": 41.585278,
+      "Longtitude": 24.691944
+    }
+  },
+  {
+    "Name": "Благоевград",
+    "Location": {
+      "Latitude": 42.016666,
+      "Longtitude": 23.1
+    }
+  },
+  {
+    "Name": "Неделино",
+    "Location": {
+      "Latitude": 41.45602,
+      "Longtitude": 25.080082
+    }
+  },
+  {
+    "Name": "Рудозем",
+    "Location": {
+      "Latitude": 41.487514,
+      "Longtitude": 24.849451
+    }
+  },
+  {
+    "Name": "Девин",
+    "Location": {
+      "Latitude": 41.742046,
+      "Longtitude": 24.397207
+    }
+  },
+  {
+    "Name": "Велико Търново",
+    "Location": {
+      "Latitude": 43.085835,
+      "Longtitude": 25.655556
+    }
+  },
+  {
+    "Name": "Видин",
+    "Location": {
+      "Latitude": 43.99,
+      "Longtitude": 22.8725
+    }
+  },
+  {
+    "Name": "Кирково",
+    "Location": {
+      "Latitude": 41.327152,
+      "Longtitude": 25.36379
+    }
+  },
+  {
+    "Name": "Крумовград",
+    "Location": {
+      "Latitude": 41.47127,
+      "Longtitude": 25.654846
+    }
+  },
+  {
+    "Name": "Джебел",
+    "Location": {
+      "Latitude": 41.495663,
+      "Longtitude": 25.303625
+    }
+  },
+  {
+    "Name": "Силистра",
+    "Location": {
+      "Latitude": 44.11667,
+      "Longtitude": 27.266666
+    }
+  },
+  {
+    "Name": "Сърница",
+    "Location": {
+      "Latitude": 41.738346,
+      "Longtitude": 24.024355
+    }
+  },
+  {
+    "Name": "Широка Лъка",
+    "Location": {
+      "Latitude": 41.679253,
+      "Longtitude": 24.58135
+    }
+  },
+  {
+    "Name": "Ямбол",
+    "Location": {
+      "Latitude": 42.483334,
+      "Longtitude": 26.5
+    }
+  },
+  {
+    "Name": "Доспат",
+    "Location": {
+      "Latitude": 41.644623,
+      "Longtitude": 24.158566
+    }
+  },
+  {
+    "Name": "Кърджали",
+    "Location": {
+      "Latitude": 41.65,
+      "Longtitude": 25.366667
+    }
+  },
+  {
+    "Name": "Габрово",
+    "Location": {
+      "Latitude": 42.87472,
+      "Longtitude": 25.334167
+    }
+  },
+  {
+    "Name": "Търговище",
+    "Location": {
+      "Latitude": 43.259167,
+      "Longtitude": 26.589167
+    }
+  }
+]

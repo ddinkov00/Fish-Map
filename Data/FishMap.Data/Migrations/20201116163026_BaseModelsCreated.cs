@@ -20,29 +20,11 @@ namespace FishMap.Data.Migrations
                     Name = table.Column<string>(nullable: false),
                     Description = table.Column<string>(nullable: true),
                     IsCarnivore = table.Column<bool>(nullable: false),
-                    ImageId = table.Column<string>(nullable: true)
+                    ImageId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_FishSpecies", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Towns",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    IsDeleted = table.Column<bool>(nullable: false),
-                    DeletedOn = table.Column<DateTime>(nullable: true),
-                    Name = table.Column<string>(nullable: true),
-                    LocationId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Towns", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +42,7 @@ namespace FishMap.Data.Migrations
                     FreeSeats = table.Column<int>(nullable: false),
                     FishingMethod = table.Column<int>(nullable: false),
                     TargetFishSpeciesId = table.Column<int>(nullable: false),
-                    HostId = table.Column<string>(nullable: true)
+                    HostId = table.Column<string>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -95,7 +77,7 @@ namespace FishMap.Data.Migrations
                     FishingMethod = table.Column<int>(nullable: false),
                     UserId = table.Column<string>(nullable: false),
                     LocationId = table.Column<int>(nullable: false),
-                    FishSpeciesId = table.Column<int>(nullable: true)
+                    FishSpeciesId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -121,7 +103,7 @@ namespace FishMap.Data.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<string>(nullable: false),
-                    GroupTripId = table.Column<int>(nullable: false)
+                    GroupTripId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -153,7 +135,7 @@ namespace FishMap.Data.Migrations
                     FishKindId = table.Column<int>(nullable: false),
                     Weight = table.Column<double>(nullable: false),
                     Length = table.Column<double>(nullable: false),
-                    TripId = table.Column<int>(nullable: false)
+                    TripId = table.Column<int>(nullable: false),
                 },
                 constraints: table =>
                 {
@@ -183,7 +165,7 @@ namespace FishMap.Data.Migrations
                     DeletedOn = table.Column<DateTime>(nullable: true),
                     Extension = table.Column<string>(nullable: true),
                     FishKindId = table.Column<int>(nullable: true),
-                    TripId = table.Column<int>(nullable: true)
+                    TripId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -218,7 +200,7 @@ namespace FishMap.Data.Migrations
                     IsMeetingSpot = table.Column<bool>(nullable: true),
                     TripId = table.Column<int>(nullable: true),
                     TownId = table.Column<int>(nullable: true),
-                    GroupTripId = table.Column<int>(nullable: true)
+                    GroupTripId = table.Column<int>(nullable: true),
                 },
                 constraints: table =>
                 {
@@ -230,17 +212,35 @@ namespace FishMap.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Locations_Towns_TownId",
-                        column: x => x.TownId,
-                        principalTable: "Towns",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Locations_Trips_TripId",
                         column: x => x.TripId,
                         principalTable: "Trips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Towns",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    IsDeleted = table.Column<bool>(nullable: false),
+                    DeletedOn = table.Column<DateTime>(nullable: true),
+                    Name = table.Column<string>(nullable: true),
+                    LocationId = table.Column<int>(nullable: false),
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Towns", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Towns_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -306,13 +306,6 @@ namespace FishMap.Data.Migrations
                 column: "IsDeleted");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Locations_TownId",
-                table: "Locations",
-                column: "TownId",
-                unique: true,
-                filter: "[TownId] IS NOT NULL");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Locations_TripId",
                 table: "Locations",
                 column: "TripId",
@@ -323,6 +316,12 @@ namespace FishMap.Data.Migrations
                 name: "IX_Towns_IsDeleted",
                 table: "Towns",
                 column: "IsDeleted");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Towns_LocationId",
+                table: "Towns",
+                column: "LocationId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Trips_FishSpeciesId",
@@ -359,19 +358,19 @@ namespace FishMap.Data.Migrations
                 name: "Images");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Towns");
 
             migrationBuilder.DropTable(
                 name: "UserGroupTrips");
 
             migrationBuilder.DropTable(
-                name: "Towns");
-
-            migrationBuilder.DropTable(
-                name: "Trips");
+                name: "Locations");
 
             migrationBuilder.DropTable(
                 name: "GroupTrips");
+
+            migrationBuilder.DropTable(
+                name: "Trips");
 
             migrationBuilder.DropTable(
                 name: "FishSpecies");

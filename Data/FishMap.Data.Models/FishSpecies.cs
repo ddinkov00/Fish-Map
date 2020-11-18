@@ -21,6 +21,9 @@
 
         public bool IsCarnivore { get; set; }
 
+        public int? MinimumLegalSize { get; set; }
+
+        [Required]
         public string ImageId { get; set; }
 
         public virtual Image Image { get; set; }

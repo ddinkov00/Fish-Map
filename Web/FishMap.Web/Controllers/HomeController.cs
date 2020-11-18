@@ -1,13 +1,26 @@
 ﻿namespace FishMap.Web.Controllers
 {
     using System.Diagnostics;
-
+    using FishMap.Data.Common.Repositories;
+    using System.Linq;
+    using FishMap.Data.Models;
     using FishMap.Web.ViewModels;
 
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
+        private readonly IDeletableEntityRepository<Town> townRepository;
+        private readonly IDeletableEntityRepository<Location> locationRepository;
+
+        public HomeController(
+            IDeletableEntityRepository<Town> townRepository,
+            IDeletableEntityRepository<Location> locationRepository)
+        {
+            this.townRepository = townRepository;
+            this.locationRepository = locationRepository;
+        }
+
         public IActionResult Index()
         {
             return this.View();
