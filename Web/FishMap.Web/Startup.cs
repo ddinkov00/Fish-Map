@@ -10,6 +10,7 @@
     using FishMap.Data.Models;
     using FishMap.Data.Repositories;
     using FishMap.Data.Seeding;
+    using FishMap.Services;
     using FishMap.Services.Data;
     using FishMap.Services.Mapping;
     using FishMap.Services.Messaging;
@@ -80,6 +81,7 @@
             Cloudinary cloudinary = new Cloudinary(account);
 
             services.AddSingleton(cloudinary);
+            services.AddTransient<ICloudinaryService, CloudinaryService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

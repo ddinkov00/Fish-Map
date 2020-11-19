@@ -1,29 +1,38 @@
 ﻿namespace FishMap.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
-    using FishMap.Data.Common.Repositories;
-    using System.Linq;
-    using FishMap.Data.Models;
-    using FishMap.Web.ViewModels;
+    using System.Threading.Tasks;
 
+    using CloudinaryDotNet;
+    using FishMap.Services;
+    using FishMap.Web.ViewModels;
+    using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
-        private readonly IDeletableEntityRepository<Town> townRepository;
-        private readonly IDeletableEntityRepository<Location> locationRepository;
+        private readonly Cloudinary cloudinary;
+        private readonly ICloudinaryService cloudinaryService;
 
         public HomeController(
-            IDeletableEntityRepository<Town> townRepository,
-            IDeletableEntityRepository<Location> locationRepository)
+            Cloudinary cloudinary,
+            ICloudinaryService cloudinaryService)
         {
-            this.townRepository = townRepository;
-            this.locationRepository = locationRepository;
+            this.cloudinary = cloudinary;
+            this.cloudinaryService = cloudinaryService;
         }
 
         public IActionResult Index()
         {
             return this.View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Upload(ICollection<IFormFile> files)
+        {
+            await this.cloudinaryService.UploadAsync(this.cloudinary, files);
+            return this.Redirect("/");
         }
 
         public IActionResult Privacy()

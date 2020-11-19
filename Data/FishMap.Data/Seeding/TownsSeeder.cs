@@ -5,6 +5,7 @@
     using System.IO;
     using System.Linq;
     using System.Threading.Tasks;
+
     using FishMap.Data.Models;
     using FishMap.Data.Seeding.DTOs;
     using Newtonsoft.Json;
@@ -23,14 +24,11 @@
 
             foreach (var town in deserializedTowns)
             {
-                await dbContext.Towns.AddAsync(new Town
+                await dbContext.AddAsync(new Town
                 {
                     Name = town.Name,
-                    Location = new Location
-                    {
-                        Longtitude = town.Location.Longtitude,
-                        Latitude = town.Location.Latitude,
-                    },
+                    LocationLatitude = town.Location.Latitude,
+                    LocationLongtitude = town.Location.Longtitude,
                 });
             }
 

@@ -1,21 +1,14 @@
 ﻿namespace FishMap.Data.Models
 {
-    using System;
+    using System.ComponentModel.DataAnnotations.Schema;
 
     using FishMap.Data.Common.Models;
 
-    public class Image : BaseDeletableModel<string>
+    public class Image : BaseDeletableModel<int>
     {
-        public Image()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
-
         public string Uri { get; set; }
 
-        public int? FishKindId { get; set; }
-
-        public virtual FishSpecies FishKind { get; set; }
+        public virtual FishSpecies FishSpecies { get; set; }
 
         public int? TripId { get; set; }
 

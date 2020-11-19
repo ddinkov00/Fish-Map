@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FishMap.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201116163026_BaseModelsCreated")]
-    partial class BaseModelsCreated
+    [Migration("20201119222031_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -197,16 +197,20 @@ namespace FishMap.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("ImageId")
+                        .HasColumnType("int");
 
                     b.Property<bool>("IsCarnivore")
                         .HasColumnType("bit");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<int?>("MinimumLegalSize")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -216,6 +220,9 @@ namespace FishMap.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ImageId")
+                        .IsUnique();
 
                     b.HasIndex("IsDeleted");
 
@@ -238,6 +245,12 @@ namespace FishMap.Data.Migrations
                     b.Property<int>("FishingMethod")
                         .HasColumnType("int");
 
+                    b.Property<float>("FishingSpotLatitued")
+                        .HasColumnType("real");
+
+                    b.Property<float>("FishingSpotLongtitude")
+                        .HasColumnType("real");
+
                     b.Property<DateTime>("FishingTime")
                         .HasColumnType("datetime2");
 
@@ -249,6 +262,12 @@ namespace FishMap.Data.Migrations
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
+
+                    b.Property<float>("MeetingSpotLatitude")
+                        .HasColumnType("real");
+
+                    b.Property<float>("MeetingSpotLongtitude")
+                        .HasColumnType("real");
 
                     b.Property<DateTime>("MeetingTime")
                         .HasColumnType("datetime2");
@@ -272,45 +291,6 @@ namespace FishMap.Data.Migrations
 
             modelBuilder.Entity("FishMap.Data.Models.Image", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<DateTime>("CreatedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime?>("DeletedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Extension")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("FishKindId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("IsDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("ModifiedOn")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("TripId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FishKindId")
-                        .IsUnique()
-                        .HasFilter("[FishKindId] IS NOT NULL");
-
-                    b.HasIndex("IsDeleted");
-
-                    b.HasIndex("TripId");
-
-                    b.ToTable("Images");
-                });
-
-            modelBuilder.Entity("FishMap.Data.Models.Location", b =>
-                {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
@@ -322,44 +302,25 @@ namespace FishMap.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("GroupTripId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
-
-                    b.Property<bool?>("IsFishingSpot")
-                        .HasColumnType("bit");
-
-                    b.Property<bool?>("IsMeetingSpot")
-                        .HasColumnType("bit");
-
-                    b.Property<float>("Latitude")
-                        .HasColumnType("real");
-
-                    b.Property<float>("Longtitude")
-                        .HasColumnType("real");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("TownId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("TripId")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
+                    b.Property<string>("Uri")
+                        .HasColumnType("nvarchar(max)");
 
-                    b.HasIndex("GroupTripId");
+                    b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
 
-                    b.HasIndex("TripId")
-                        .IsUnique()
-                        .HasFilter("[TripId] IS NOT NULL");
+                    b.HasIndex("TripId");
 
-                    b.ToTable("Locations");
+                    b.ToTable("Images");
                 });
 
             modelBuilder.Entity("FishMap.Data.Models.Setting", b =>
@@ -410,21 +371,22 @@ namespace FishMap.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<float>("LocationLatitude")
+                        .HasColumnType("real");
+
+                    b.Property<float>("LocationLongtitude")
+                        .HasColumnType("real");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("LocationId")
-                        .IsUnique();
 
                     b.ToTable("Towns");
                 });
@@ -461,8 +423,11 @@ namespace FishMap.Data.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<int>("LocationId")
-                        .HasColumnType("int");
+                    b.Property<float>("LocationLatitude")
+                        .HasColumnType("real");
+
+                    b.Property<float>("LocationLongtitude")
+                        .HasColumnType("real");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
@@ -624,6 +589,15 @@ namespace FishMap.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("FishMap.Data.Models.FishSpecies", b =>
+                {
+                    b.HasOne("FishMap.Data.Models.Image", "Image")
+                        .WithOne("FishSpecies")
+                        .HasForeignKey("FishMap.Data.Models.FishSpecies", "ImageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("FishMap.Data.Models.GroupTrip", b =>
                 {
                     b.HasOne("FishMap.Data.Models.ApplicationUser", "Host")
@@ -639,33 +613,9 @@ namespace FishMap.Data.Migrations
 
             modelBuilder.Entity("FishMap.Data.Models.Image", b =>
                 {
-                    b.HasOne("FishMap.Data.Models.FishSpecies", "FishKind")
-                        .WithOne("Image")
-                        .HasForeignKey("FishMap.Data.Models.Image", "FishKindId");
-
                     b.HasOne("FishMap.Data.Models.Trip", "Trip")
                         .WithMany("Images")
                         .HasForeignKey("TripId");
-                });
-
-            modelBuilder.Entity("FishMap.Data.Models.Location", b =>
-                {
-                    b.HasOne("FishMap.Data.Models.GroupTrip", "GroupTrip")
-                        .WithMany("Locations")
-                        .HasForeignKey("GroupTripId");
-
-                    b.HasOne("FishMap.Data.Models.Trip", "Trip")
-                        .WithOne("Location")
-                        .HasForeignKey("FishMap.Data.Models.Location", "TripId");
-                });
-
-            modelBuilder.Entity("FishMap.Data.Models.Town", b =>
-                {
-                    b.HasOne("FishMap.Data.Models.Location", "Location")
-                        .WithOne("Town")
-                        .HasForeignKey("FishMap.Data.Models.Town", "LocationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("FishMap.Data.Models.Trip", b =>

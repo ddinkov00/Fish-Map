@@ -34,8 +34,6 @@
 
         public DbSet<Image> Images { get; set; }
 
-        public DbSet<Location> Locations { get; set; }
-
         public DbSet<Trip> Trips { get; set; }
 
         public DbSet<Town> Towns { get; set; }
@@ -89,20 +87,10 @@
                 foreignKey.DeleteBehavior = DeleteBehavior.Restrict;
             }
 
-            builder.Entity<Trip>()
-                .HasOne(t => t.Location)
-                .WithOne(l => l.Trip)
-                .HasForeignKey<Location>(t => t.TripId);
-
             builder.Entity<FishSpecies>()
                 .HasOne(fs => fs.Image)
-                .WithOne(i => i.FishKind)
-                .HasForeignKey<Image>(fs => fs.FishKindId);
-
-            builder.Entity<Town>()
-                .HasOne(t => t.Location)
-                .WithOne(l => l.Town)
-                .HasForeignKey<Town>(t => t.LocationId);
+                .WithOne(i => i.FishSpecies)
+                .HasForeignKey<FishSpecies>(fs => fs.ImageId);
         }
 
         private static void SetIsDeletedQueryFilter<T>(ModelBuilder builder)
