@@ -1,5 +1,7 @@
 ﻿namespace FishMap.Data.Models
 {
+    using System.Collections.Generic;
+
     using FishMap.Data.Common.Models;
 
     public class Fish : BaseDeletableModel<int>

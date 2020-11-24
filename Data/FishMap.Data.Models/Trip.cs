@@ -14,6 +14,9 @@
         }
 
         [Required]
+        public string WaterPoolName { get; set; }
+
+        [Required]
         [MinLength(10)]
         public string Description { get; set; }
 

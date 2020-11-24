@@ -7,9 +7,9 @@
         public int Id { get; set; }
 
         [Required]
-        public string UserID { get; set; }
+        public string HostId { get; set; }
 
-        public virtual ApplicationUser User { get; set; }
+        public virtual ApplicationUser Host { get; set; }
 
         public int GroupTripId { get; set; }
 

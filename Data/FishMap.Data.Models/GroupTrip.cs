@@ -13,6 +13,9 @@
             this.Guests = new HashSet<UserGroupTrip>();
         }
 
+        [Required]
+        public string WaterPoolName { get; set; }
+
         public DateTime MeetingTime { get; set; }
 
         [Range(-90, 90)]
