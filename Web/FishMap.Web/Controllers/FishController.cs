@@ -6,17 +6,18 @@
     using System.Threading.Tasks;
 
     using FishMap.Web.ViewModels.Fish;
+    using FishMap.Web.ViewModels.Trips;
     using Microsoft.AspNetCore.Mvc;
 
     public class FishController : Controller
     {
-        public IActionResult Add()
+        public IActionResult Create(TripsToFishInputModel tripData)
         {
             return this.View();
         }
 
         [HttpPost]
-        public IActionResult Add(FishInputModel input)
+        public IActionResult Create(FishInputModel formInput)
         {
             return this.Redirect("/");
         }

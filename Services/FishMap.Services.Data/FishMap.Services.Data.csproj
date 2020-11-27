@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FishMap.Data.Common\FishMap.Data.Common.csproj" />
     <ProjectReference Include="..\..\Data\FishMap.Data.Models\FishMap.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Web\FishMap.Web.ViewModels\FishMap.Web.ViewModels.csproj" />
     <ProjectReference Include="..\FishMap.Services.Mapping\FishMap.Services.Mapping.csproj" />
   </ItemGroup>
 

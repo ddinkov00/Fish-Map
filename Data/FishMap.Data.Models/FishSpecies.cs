@@ -10,7 +10,6 @@
         public FishSpecies()
         {
             this.Fish = new HashSet<Fish>();
-            this.Trips = new HashSet<Trip>();
             this.GroupTrips = new HashSet<GroupTrip>();
         }
 
@@ -29,8 +28,6 @@
         public virtual Image Image { get; set; }
 
         public virtual ICollection<Fish> Fish { get; set; }
-
-        public virtual ICollection<Trip> Trips { get; set; }
 
         public virtual ICollection<GroupTrip> GroupTrips { get; set; }
     }

@@ -12,6 +12,7 @@
     using FishMap.Data.Seeding;
     using FishMap.Services;
     using FishMap.Services.Data;
+    using FishMap.Services.Data.Contracts;
     using FishMap.Services.Mapping;
     using FishMap.Services.Messaging;
     using FishMap.Web.ViewModels;
@@ -72,6 +73,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<ITripsService, TripsService>();
 
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],

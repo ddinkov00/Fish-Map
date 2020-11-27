@@ -34,6 +34,6 @@
 
         [Required]
         [Display(Name = "Метод на риболов")]
-        public string FishingMethod { get; set; }
+        public int FishingMethod { get; set; }
     }
 }
