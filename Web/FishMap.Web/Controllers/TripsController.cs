@@ -24,7 +24,7 @@
                 return this.View();
             }
 
-            return this.Redirect("/");
+            return this.Json(input);
         }
     }
 }

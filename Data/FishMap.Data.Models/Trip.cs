@@ -31,7 +31,7 @@
 
         public DateTime Date { get; set; }
 
-        public FishingMethod FishingMethod { get; set; }
+        public FishingMethodEnum FishingMethod { get; set; }
 
         [Required]
         public string UserId { get; set; }

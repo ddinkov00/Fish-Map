@@ -2,79 +2,119 @@
 @inject IConfiguration configuration
 @model FishMap.Web.ViewModels.Trips.CreateTripInputModel
 @{
-    this.ViewData["Title"] = "Добавяне на излет";
+    this.ViewData["Title"] = "Добавяне на риболовен излет";
 }
-    <div style="padding-bottom: 5%">
-        <h1 class="row justify-content-center">@this.ViewData["Title"]</h1>
-        <form class="row mb-5 mb-md-0" method="post" enctype="multipart/form-data">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label asp-for="WaterPoolName"></label>
-                    <input asp-for="WaterPoolName" class="form-control" />
-                    <span asp-validation-for="WaterPoolName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FishCaughtCout"></label>
-                    <input type="number" min="0" max="100" asp-for="FishCaughtCout" class="form-control" />
-                    <span asp-validation-for="FishCaughtCout" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Description"></label>
-                    <textarea asp-for="Description" rows="5" class="form-control"></textarea>
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Date"></label>
-                    <input type="date" asp-for="Date" class="form-control" />
-                    <span asp-validation-for="Date" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="FishingMethod"></label>
-                    <select asp-for="FishingMethod" class="form-control">
-                        <option>Риболов на жива стръв</option>
-                        <option>Риболов на муха</option>
-                        <option>Спининг</option>
-                        <option>Тролинг</option>
-                    </select>
-                    <span asp-validation-for="FishingMethod" class="text-danger"></span>
-                </div>
+<div style="padding-bottom: 8%; padding-top: 3%">
+    <h1 class="row justify-content-center">@this.ViewData["Title"]</h1>
+    <form class="row mb-5 mb-md-0" method="post" enctype="multipart/form-data">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="WaterPoolName"></label>
+                <input type="text" asp-for="WaterPoolName" class="form-control" />
+                <span asp-validation-for="WaterPoolName" class="text-danger"></span>
             </div>
-            <div class="col-md-6">
-                <div id="map" class="z-depth-1-half map-responsive mt-md-4 mb-2" style="height: 306px"></div>
-                <div class="form-group mt-1 mt-md-0">
+            <div class="form-group">
+                <label asp-for="FishCaughtCout"></label>
+                <input type="number" min="0" max="100" asp-for="FishCaughtCout" class="form-control" />
+                <span asp-validation-for="FishCaughtCout" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description" rows="5" class="form-control"></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date"></label>
+                <input type="date" asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FishingMethod"></label>
+                <select asp-for="FishingMethod" class="form-control"
+                        asp-items="Html.GetEnumSelectList<FishMap.Data.Models.FishingMethodEnum>()">
+                    <option>Избери метод на риболов...</option>
+                </select>
+                <span asp-validation-for="FishingMethod" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="latitude" type="hidden" asp-for="LocationLatitude" class="form-control" />
+                <span asp-validation-for="LocationLatitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="longtitude" type="hidden" asp-for="LocationLongtitude" class="form-control" />
+                <span asp-validation-for="LocationLongtitude" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group mt-md-6">
+                <label>Изберете място на излета</label>
+                <div id="map" class="z-depth-1-half map-responsive mb-2" style="height: 63vh"></div>
+            </div>
+            @*<div class="form-group mt-1 mt-md-0">
                     <label asp-for="Images"></label>
                     <input type="file" multiple asp-for="Images" class="form-control" />
                     <span asp-validation-for="Images" class="text-danger"></span>
-                </div>
-
-                <div class="form-group col-md-6">
-                    <input type="hidden" asp-for="LocationLatitude" class="form-control" />
-                    <span asp-validation-for="LocationLatitude" class="text-danger"></span>
-                </div>
-                <div class="form-group col-md-6">
-                    <input type="hidden" asp-for="LocationLongtitude" class="form-control" />
-                    <span asp-validation-for="LocationLongtitude" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-12">
-                <input type="submit" class=" btn btn-primary" />
-            </div>
-        </form>
-        @*<br>
-        <br>*@
-    </div>
+                </div>*@
+        </div>
+        <div class="col-12 b">
+            <button type="submit" class="btn btn-primary">Добавяне на риби към излета</button>
+        </div>
+    </form>
+</div>
 
 @section Scripts{
-    <script>
-        let map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 42.7249925, lng: 25.4833039 },
-                zoom: 6.9,
-            });
-        }
-    </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=@(this.configuration["GoogleMaps:ApiKey"])&callback=initMap&libraries=&v=weekly"
             defer></script>
+    <script>
+        let markers = [];
+        let map;
+
+        function initMap() {
+            const myLatlng = { lat: 42.7249925, lng: 25.4833039 };
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 7.5,
+                center: myLatlng,
+            });
+
+            map.addListener("click", (event) => {
+                deleteMarkers();
+                addMarker(event.latLng);
+                const coordinatesJson = event.latLng.toJSON()
+                console.log(coordinatesJson);
+                fillLocationCoordinates(coordinatesJson);
+            });
+        }
+
+        function addMarker(location) {
+            const marker = new google.maps.Marker({
+                icon: "http://maps.google.com/mapfiles/kml/shapes/fishing.png",
+                draggable: false,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                position: location,
+            });
+            markers.push(marker);
+        }
+
+        function deleteMarkers() {
+            clearMarkers();
+            markers = [];
+        }
+
+        function clearMarkers() {
+            setMapOnAll(null);
+        }
+
+        function setMapOnAll(map) {
+            for (let i = 0; i < markers.length; i++) {
+                markers[i].setMap(map);
+            }
+        }
+
+        function fillLocationCoordinates(latLng) {
+            document.getElementById('latitude').value = latLng.lat;
+            document.getElementById('longtitude').value = latLng.lng;
+        }
+    </script>
 }
 

@@ -1,16 +1,16 @@
 ﻿namespace FishMap.Web.ViewModels.Trips
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
-    using Microsoft.AspNetCore.Http;
+    using FishMap.Common.ValidationAttributes;
 
     public class CreateTripInputModel
     {
         [Required]
         [MinLength(3)]
         [Display(Name = "Име на воден басейн")]
+
         public string WaterPoolName { get; set; }
 
         [Required]
@@ -29,16 +29,11 @@
         public float LocationLongtitude { get; set; }
 
         [Display(Name = "Дата")]
+        [CustomDateAttribute]
         public DateTime Date { get; set; }
 
         [Required]
         [Display(Name = "Метод на риболов")]
         public string FishingMethod { get; set; }
-
-        [Required]
-        [Display(Name = "Снимки")]
-        public IEnumerable<IFormFile> Images { get; set; }
-
-        public IEnumerable<FishInputModel> Fish { get; set; }
     }
 }

@@ -36,7 +36,7 @@
         public int FreeSeats { get; set; }
 
         [Required]
-        public FishingMethod FishingMethod { get; set; }
+        public FishingMethodEnum FishingMethod { get; set; }
 
         public int TargetFishSpeciesId { get; set; }
 
