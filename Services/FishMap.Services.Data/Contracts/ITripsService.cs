@@ -3,9 +3,10 @@
     using System.Threading.Tasks;
 
     using FishMap.Web.ViewModels.Trips;
+    using Microsoft.AspNetCore.Routing;
 
     public interface ITripsService
     {
-        Task<TripsToFishInputModel> CreateAsync(CreateTripInputModel input, string userId);
+        Task<AddFishRouteData> CreateAsync(CreateTripInputModel input, string userId);
     }
 }

@@ -1,7 +1,32 @@
-﻿
+﻿@using System
+@model FishMap.Web.ViewModels.Fish.FishInputModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Добавяне на риби";
 }
 
-<h1>Create</h1>
+    <div>
+        <h1 class="justify-content-center">@this.ViewData["Title"]</h1>
+        <form class="row mb-5 mb-md-0" method="post">
+            @for (int i = 0; i < (int)this.ViewData["FishCount"]; i++)
+            {
+                <div class="row">
+                    <div class="form-group">
+                        <label asp-for="WeightInKilos"></label>
+                        <input type="number" min="0" max="100" asp-for="WeightInKilos" class="form-control" />
+                        <span asp-validation-for="WeightInKilos" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="LengthInCentimeters"></label>
+                        <input type="number" min="0" max="100" asp-for="LengthInCentimeters" class="form-control" />
+                        <span asp-validation-for="LengthInCentimeters" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="WeightInKilos"></label>
+                        <input type="number" min="0" max="100" asp-for="WeightInKilos" class="form-control" />
+                        <span asp-validation-for="WeightInKilos" class="text-danger"></span>
+                    </div>
+                </div>
+            }
+        </form>
+    </div>
 

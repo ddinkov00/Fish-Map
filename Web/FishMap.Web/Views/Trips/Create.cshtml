@@ -4,9 +4,10 @@
 @{
     this.ViewData["Title"] = "Добавяне на риболовен излет";
 }
-<div style="padding-bottom: 8%; padding-top: 3%">
-    <h1 class="row justify-content-center">@this.ViewData["Title"]</h1>
-    <form class="row mb-5 mb-md-0" method="post" enctype="multipart/form-data">
+<div class="pb-4 ">
+    <h1 class="text-center pt-3">@this.ViewData["Title"]</h1>
+    <hr class="alert-info" />
+    <form class="row mb-5 mb-md-0 pb-0 pb-md-5" method="post">
         <div class="col-md-6">
             <div class="form-group">
                 <label asp-for="WaterPoolName"></label>
@@ -37,18 +38,18 @@
                 <span asp-validation-for="FishingMethod" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="latitude" type="" asp-for="LocationLatitude" class="form-control" />
+                <input id="latitude" type="hidden" asp-for="LocationLatitude" class="form-control" />
                 <span asp-validation-for="LocationLatitude" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="longtitude" type="" asp-for="LocationLongtitude" class="form-control" />
+                <input id="longtitude" type="hidden" asp-for="LocationLongtitude" class="form-control" />
                 <span asp-validation-for="LocationLongtitude" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group mt-md-6">
                 <label>Изберете място на излета</label>
-                <div id="map" class="z-depth-1-half map-responsive mb-2" style="height: 63vh"></div>
+                <div id="map" class="z-depth-1-half map-responsive" style="height: 63vh"></div>
             </div>
             @*<div class="form-group mt-1 mt-md-0">
                     <label asp-for="Images"></label>
@@ -56,7 +57,8 @@
                     <span asp-validation-for="Images" class="text-danger"></span>
                 </div>*@
         </div>
-        <div class="col-12 b">
+        <div class="col-12 text-center">
+            <hr class="alert-info" />
             <button type="submit" class="btn btn-primary">Добавяне на риби към излета</button>
         </div>
     </form>

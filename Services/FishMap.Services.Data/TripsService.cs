@@ -6,6 +6,7 @@
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Trips;
+    using Microsoft.AspNetCore.Routing;
 
     public class TripsService : ITripsService
     {
@@ -16,7 +17,7 @@
             this.tripsRepository = tripsRepository;
         }
 
-        public async Task<TripsToFishInputModel> CreateAsync(CreateTripInputModel input, string userId)
+        public async Task<AddFishRouteData> CreateAsync(CreateTripInputModel input, string userId)
         {
             var trip = new Trip
             {
@@ -33,7 +34,7 @@
             await this.tripsRepository.AddAsync(trip);
             await this.tripsRepository.SaveChangesAsync();
 
-            return new TripsToFishInputModel()
+            return new AddFishRouteData
             {
                 TripId = trip.Id,
                 FishCount = trip.FishCaughtCount,
