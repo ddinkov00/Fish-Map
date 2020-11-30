@@ -1,6 +1,4 @@
-﻿using FishMap.Web.ViewModels.Fish;
-
-namespace FishMap.Web.ViewModels.Trips
+﻿namespace FishMap.Web.ViewModels.Trips
 {
     public class AddFishRouteData
     {

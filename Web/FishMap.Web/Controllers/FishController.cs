@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Fish;
     using FishMap.Web.ViewModels.Trips;
     using Microsoft.AspNetCore.Mvc;
@@ -12,17 +12,28 @@
 
     public class FishController : Controller
     {
+        private readonly IFishSpeciesService fishSpeciesService;
+
+        public FishController(IFishSpeciesService fishSpeciesService)
+        {
+            this.fishSpeciesService = fishSpeciesService;
+        }
+
         public IActionResult Create(AddFishRouteData routeData)
         {
             this.ViewData["FishCount"] = routeData.FishCount;
             this.ViewData["TripId"] = routeData.TripId;
-            return this.View();
+
+            var viewModel = new CreateFishListInputModel();
+            viewModel.FishSpeciesItems = this.fishSpeciesService.GetAll();
+
+            return this.View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Create(FishInputModel input)
+        public IActionResult Create(CreateFishListInputModel input)
         {
-            return this.Redirect("/");
+            return this.Json(input);
         }
     }
 }

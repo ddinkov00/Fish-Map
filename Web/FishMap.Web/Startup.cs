@@ -74,6 +74,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITripsService, TripsService>();
+            services.AddTransient<IFishSpeciesService, FishSpeciesService>();
 
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],
