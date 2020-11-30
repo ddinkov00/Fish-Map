@@ -20,6 +20,7 @@
         [Display(Name = "Вид на рибата")]
         public int FishSpeciesId { get; set; }
 
-        //public IEnumerable<IFormFile> Images { get; set; }
+        [Display(Name = "Снимки")]
+        public IEnumerable<IFormFile> Images { get; set; }
     }
 }

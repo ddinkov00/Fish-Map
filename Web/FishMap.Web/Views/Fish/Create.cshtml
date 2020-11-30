@@ -5,34 +5,40 @@
     var fishSpeciesItems = this.Model.FishSpeciesItems.Select(x => new SelectListItem(x.Name, x.Id));
 }
     <div>
-        <h1 class="justify-content-center">@this.ViewData["Title"]</h1>
-        <form class="row mb-5 mb-md-0" method="post">
+        <h1 class="text-center pt-3">@this.ViewData["Title"]</h1>
+        <hr class="alert-info" />
+        <form class="mb-5 mb-md-0 justify-content-center" method="post" enctype="multipart/form-data">
             @for (int i = 0; i < (int)this.ViewData["FishCount"]; i++)
             {
-                <div class="row">
-                    @*<div class="form-group">
+                <div class="row border-bottom border-white mb-2">
+                    <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.Images"></label>
                         <input asp-for="FishInputModel.Images" name="Fish[@i].Images" class="form-control" />
                         <span asp-validation-for="FishInputModel.Images" class="text-danger"></span>
-                    </div>*@
-                    <div class="form-group">
+                    </div>
+                    <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.WeightInKilos"></label>
-                        <input type="number" min="0" max="100" asp-for="FishInputModel.WeightInKilos" name="Fish[@i].WeightInKilos" class="form-control" />
+                        <input type="number" min="0" max="100" asp-for="FishInputModel.WeightInKilos"
+                               name="Fish[@i].WeightInKilos" class="form-control" />
                         <span asp-validation-for="FishInputModel.WeightInKilos" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.LengthInCentimeters"></label>
-                        <input type="number" min="0" max="100" asp-for="FishInputModel.LengthInCentimeters" name="Fish[@i].LengthInCentimeters" class="form-control" />
+                        <input type="number" min="0" max="100" asp-for="FishInputModel.LengthInCentimeters"
+                               name="Fish[@i].LengthInCentimeters" class="form-control" />
                         <span asp-validation-for="FishInputModel.LengthInCentimeters" class="text-danger"></span>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.FishSpeciesId"></label>
-                        <select name="Fish[@i].FishSpeciesId" asp-for="FishInputModel.FishSpeciesId" class="form-control" asp-items="fishSpeciesItems"></select>
+                        <select asp-for="FishInputModel.FishSpeciesId" name="Fish[@i].FishSpeciesId"
+                                class="form-control" asp-items="fishSpeciesItems"></select>
                         <span asp-validation-for="FishInputModel.FishSpeciesId" class="text-danger"></span>
                     </div>
                 </div>
             }
-            <button type="submit" class="btn btn-primary">Добавяне на риби към излета</button>
+            <div class="col-12 text-center mb-md-3 mt-3">
+                <button type="submit" class="btn btn-primary mb-md-5 mb-4">Добавяне на риби към излета</button>
+            </div>
         </form>
     </div>
     
