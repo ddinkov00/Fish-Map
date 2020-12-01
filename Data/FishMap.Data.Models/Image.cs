@@ -13,5 +13,9 @@
         public int? TripId { get; set; }
 
         public virtual Trip Trip { get; set; }
+
+        public int? FishId { get; set; }
+
+        public Fish Fish { get; set; }
     }
 }

@@ -2,8 +2,11 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+    using CloudinaryDotNet;
+    using FishMap.Services;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Fish;
     using FishMap.Web.ViewModels.Trips;
@@ -13,10 +16,23 @@
     public class FishController : Controller
     {
         private readonly IFishSpeciesService fishSpeciesService;
+        private readonly IFishServices fishService;
+        private readonly ICloudinaryService cloudinaryService;
+        private readonly IImageServices imageService;
+        private readonly Cloudinary cloudinary;
 
-        public FishController(IFishSpeciesService fishSpeciesService)
+        public FishController(
+            IFishSpeciesService fishSpeciesService,
+            IFishServices fishService,
+            ICloudinaryService cloudinaryService,
+            IImageServices imageService,
+            Cloudinary cloudinary)
         {
             this.fishSpeciesService = fishSpeciesService;
+            this.fishService = fishService;
+            this.cloudinaryService = cloudinaryService;
+            this.imageService = imageService;
+            this.cloudinary = cloudinary;
         }
 
         public IActionResult Create(AddFishRouteData routeData)
@@ -31,9 +47,24 @@
         }
 
         [HttpPost]
-        public IActionResult Create(CreateFishListInputModel input)
+        public async Task<IActionResult> Create(CreateFishListInputModel input)
         {
-            return this.Json(input);
+            var sw = new Stopwatch();
+            sw.Start();
+            var tripId = input.TripId;
+
+            foreach (var fishModel in input.Fish)
+            {
+                var fishId = await this.fishService.CreateAsync(fishModel, tripId);
+                var imagesUris = await this.cloudinaryService.UploadAsync(this.cloudinary, fishModel.Images.ToList());
+
+                foreach (var imageUri in imagesUris)
+                {
+                    await this.imageService.CreateAsync(imageUri, fishId);
+                }
+            }
+
+            return this.Redirect("/");
         }
     }
 }

@@ -6,6 +6,8 @@
 
     public class CreateFishListInputModel
     {
+        public int TripId { get; set; }
+
         public CreateFishInListInputModel FishInputModel { get; set; }
 
         public IEnumerable<CreateFishInListInputModel> Fish { get; set; }

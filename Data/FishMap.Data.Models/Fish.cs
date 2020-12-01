@@ -6,9 +6,14 @@
 
     public class Fish : BaseDeletableModel<int>
     {
-        public int FishKindId { get; set; }
+        public Fish()
+        {
+            this.Images = new HashSet<Image>();
+        }
 
-        public virtual FishSpecies FishKind { get; set; }
+        public int FishSpeciesId { get; set; }
+
+        public virtual FishSpecies FishSpecies { get; set; }
 
         public double Weight { get; set; }
 
@@ -17,5 +22,7 @@
         public int TripId { get; set; }
 
         public virtual Trip Trip { get; set; }
+
+        public IEnumerable<Image> Images { get; set; }
     }
 }

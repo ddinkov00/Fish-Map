@@ -3,13 +3,13 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using FishMap.Data.Common.Models;
 
     public class Trip : BaseDeletableModel<int>
     {
         public Trip()
         {
-            this.Images = new HashSet<Image>();
             this.FishCaught = new HashSet<Fish>();
         }
 
@@ -37,8 +37,6 @@
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
-
-        public virtual ICollection<Image> Images { get; set; }
 
         public virtual ICollection<Fish> FishCaught { get; set; }
     }

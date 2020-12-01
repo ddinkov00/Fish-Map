@@ -8,6 +8,7 @@
         <h1 class="text-center pt-3">@this.ViewData["Title"]</h1>
         <hr class="alert-info" />
         <form class="mb-5 mb-md-0 justify-content-center" method="post" enctype="multipart/form-data">
+            <input asp-for="TripId" class="form-control" type="hidden" value="@this.ViewData["TripId"]"/>
             @for (int i = 0; i < (int)this.ViewData["FishCount"]; i++)
             {
                 <div class="row border-bottom border-white mb-2">
@@ -31,7 +32,9 @@
                     <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.FishSpeciesId"></label>
                         <select asp-for="FishInputModel.FishSpeciesId" name="Fish[@i].FishSpeciesId"
-                                class="form-control" asp-items="fishSpeciesItems"></select>
+                                class="form-control" asp-items="fishSpeciesItems">
+                            <option>Изберете вид на рибата</option>
+                        </select>
                         <span asp-validation-for="FishInputModel.FishSpeciesId" class="text-danger"></span>
                     </div>
                 </div>

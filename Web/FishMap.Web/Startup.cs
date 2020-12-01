@@ -75,6 +75,8 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<ITripsService, TripsService>();
             services.AddTransient<IFishSpeciesService, FishSpeciesService>();
+            services.AddTransient<IFishServices, FishServices>();
+            services.AddTransient<IImageServices, ImageServices>();
 
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],
