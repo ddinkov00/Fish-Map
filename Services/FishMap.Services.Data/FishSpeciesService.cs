@@ -17,7 +17,33 @@
             this.fishSpeciesRepository = fishSpeciesRepository;
         }
 
-        public IEnumerable<FishSpeciesSelectListModel> GetAll()
+        public int GetAllCount()
+        {
+            return this.fishSpeciesRepository
+                .AllAsNoTracking()
+                .Count();
+        }
+
+        public IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerPage = 12)
+        {
+            var fishSpecies = this.fishSpeciesRepository.AllAsNoTracking()
+                .Select(x => new FishSpeciesInListViewModel
+                {
+                    Id = x.Id,
+                    ImageUri = x.Image.Uri,
+                    Name = x.Name,
+                    IsCarnivore = x.IsCarnivore,
+                    Descripton = x.Description,
+                })
+                .OrderBy(x => x.Name)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToList();
+
+            return fishSpecies;
+        }
+
+        public IEnumerable<FishSpeciesSelectListModel> GetAllForSelectList()
         {
             return this.fishSpeciesRepository.AllAsNoTracking()
                 .Select(x => new FishSpeciesSelectListModel

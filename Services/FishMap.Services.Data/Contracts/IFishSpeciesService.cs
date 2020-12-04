@@ -2,11 +2,14 @@
 {
     using System.Collections.Generic;
 
-    using FishMap.Data.Models;
     using FishMap.Web.ViewModels.FishSpecies;
 
     public interface IFishSpeciesService
     {
-        IEnumerable<FishSpeciesSelectListModel> GetAll();
+        int GetAllCount();
+
+        IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerGage = 12);
+
+        IEnumerable<FishSpeciesSelectListModel> GetAllForSelectList();
     }
 }

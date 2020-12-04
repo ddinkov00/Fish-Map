@@ -41,7 +41,7 @@
             this.ViewData["TripId"] = routeData.TripId;
 
             var viewModel = new CreateFishListInputModel();
-            viewModel.FishSpeciesItems = this.fishSpeciesService.GetAll();
+            viewModel.FishSpeciesItems = this.fishSpeciesService.GetAllForSelectList();
 
             return this.View(viewModel);
         }
