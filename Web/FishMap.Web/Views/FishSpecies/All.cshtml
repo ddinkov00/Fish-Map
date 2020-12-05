@@ -8,17 +8,17 @@
 <div class="row">
     @foreach (var fishSpecies in this.Model.FishSpecies)
     {
-        <div class="card col-md-4">
+        <div class="card col-md-4 bg-transparent">
             <img class="card-img-top rounded img-fluid" src="@fishSpecies.ImageUri" height="190" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">@fishSpecies.Name</h5>
                 <p class="card-text">@(fishSpecies.Descripton.Split(".")[0] + "...")</p>
-                <a href="#" class="btn btn-primary">Повече информация</a>
+                <a asp-action="ById" asp-route-id="@fishSpecies.Id" class="btn btn-primary">Повече информация</a>
             </div>
         </div>
     }
 </div>
-<hr class="alert-info" />
+<hr class="alert-info" />   
 <partial name="_PagingPartial" model="@Model" />
 <br>
 

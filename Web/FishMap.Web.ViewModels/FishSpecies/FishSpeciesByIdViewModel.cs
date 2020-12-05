@@ -1,10 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FishMap.Web.ViewModels.FishSpecies
+﻿namespace FishMap.Web.ViewModels.FishSpecies
 {
-    class FishSpeciesByIdViewModel
+    using System.Collections.Generic;
+
+    public class FishSpeciesByIdViewModel
     {
+        public int Id { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public int? MinimalLegalSize { get; set; }
+
+        public string ImageUri { get; set; }
+
+        public IEnumerable<TripByFishSpeciesViewModel> Trips { get; set; }
     }
 }

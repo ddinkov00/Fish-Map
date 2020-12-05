@@ -11,5 +11,7 @@
         IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerGage = 12);
 
         IEnumerable<FishSpeciesSelectListModel> GetAllForSelectList();
+
+        FishSpeciesByIdViewModel GetById(int id);
     }
 }

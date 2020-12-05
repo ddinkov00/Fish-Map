@@ -1,0 +1,30 @@
+﻿@model FishMap.Web.ViewModels.FishSpecies.FishSpeciesByIdViewModel
+@{
+    ViewData["Title"] = this.Model.Name;
+}
+
+    <h1 class="h1 text-center mt-2">@ViewData["Title"]</h1>
+    <div class="row mb-5 mt-2">
+        <div class="card mb-4 bg-transparent">
+            <div class="row">
+                <div class="col-1"></div>
+                <img class="card-img-top col-10 rounded mt-2" src="@Model.ImageUri" alt="Card image cap">
+                <div class="col-1"></div>
+            </div>
+            @*<div class="row"
+            <img class="rounded mt-2" src="@Model.ImageUri" alt="Card image cap">
+            <div class="form-group mt-md-6">
+                <label>Изберете място на излета</label>
+                <div id="map" class="z-depth-1-half map-responsive" style="height: 63vh"></div>
+            </div>
+        </div>*@
+        <div class="card-body text-center">
+            <p class="card-text"><strong>Описание:</strong> @Model.Description</p>
+            @if (Model.MinimalLegalSize != null)
+            {
+                <p class="card-text"><strong>Минимално допустими размери за улов:</strong> @Model.MinimalLegalSize см.</p>
+            }
+        </div>
+        </div>
+    </div>
+

@@ -6,15 +6,20 @@
     using FishMap.Data.Common.Repositories;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
+    using FishMap.Web.ViewModels;
     using FishMap.Web.ViewModels.FishSpecies;
 
     public class FishSpeciesService : IFishSpeciesService
     {
         private readonly IDeletableEntityRepository<FishSpecies> fishSpeciesRepository;
+        private readonly ITripsService tripsService;
 
-        public FishSpeciesService(IDeletableEntityRepository<FishSpecies> fishSpeciesRepository)
+        public FishSpeciesService(
+            IDeletableEntityRepository<FishSpecies> fishSpeciesRepository,
+            ITripsService tripsService)
         {
             this.fishSpeciesRepository = fishSpeciesRepository;
+            this.tripsService = tripsService;
         }
 
         public int GetAllCount()
@@ -27,6 +32,9 @@
         public IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerPage = 12)
         {
             var fishSpecies = this.fishSpeciesRepository.AllAsNoTracking()
+                .OrderBy(x => x.Name)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
                 .Select(x => new FishSpeciesInListViewModel
                 {
                     Id = x.Id,
@@ -35,9 +43,6 @@
                     IsCarnivore = x.IsCarnivore,
                     Descripton = x.Description,
                 })
-                .OrderBy(x => x.Name)
-                .Skip((page - 1) * itemsPerPage)
-                .Take(itemsPerPage)
                 .ToList();
 
             return fishSpecies;
@@ -53,6 +58,23 @@
                 })
                 .OrderBy(x => x.Name)
                 .ToList();
+        }
+
+        public FishSpeciesByIdViewModel GetById(int id)
+        {
+            var fishSpecies = this.fishSpeciesRepository.AllAsNoTracking()
+                .Where(fs => fs.Id == id)
+                .Select(fs => new FishSpeciesByIdViewModel
+                {
+                    Name = fs.Name,
+                    Description = fs.Description,
+                    MinimalLegalSize = fs.MinimumLegalSize,
+                    ImageUri = fs.Image.Uri,
+                    Trips = this.tripsService.GetAllByFishSpecies(id),
+                })
+                .FirstOrDefault();
+
+            return fishSpecies;
         }
     }
 }
