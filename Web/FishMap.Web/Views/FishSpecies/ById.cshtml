@@ -5,32 +5,45 @@
     ViewData["Title"] = this.Model.Name;
 }
 
-<h1 class="h1 text-center mt-2">@ViewData["Title"]</h1>
-<div class="row mb-5 mt-2">
-    <div class="card mb-4 bg-transparent">
+    <div class="card mb-5 container mt-3 bg-transparent text-center">
+        <h3 class="card-title text-center">@Model.Name</h3>
+        <hr class="alert-info" />
         <div class="row">
-            <div class="col-1"></div>
-            <img class="card-img-top col-10 rounded mt-2" src="@Model.ImageUri" alt="Card image cap">
-            <div class="col-1"></div>
+            <div class="col-md-2"></div>
+            <img class="card-img-top rounded col-md-8" src="@Model.ImageUri" alt="Card image cap">
+            <div class="col-md-2"></div>
         </div>
-        @*<div class="row"
-                <img class="rounded mt-2" src="@Model.ImageUri" alt="Card image cap">
-                <div class="form-group mt-md-6">
-                    <label>Изберете място на излета</label>
-                    <div id="map" class="z-depth-1-half map-responsive" style="height: 63vh"></div>
-                </div>
-            </div>*@
-        <div class="card-body text-center">
-            <p class="card-text"><strong>Описание:</strong> @Model.Description</p>
+        <div class="card-body">
+            <p class="card-text"><strong>Описание: </strong>@Model.Description</p>
             @if (Model.MinimalLegalSize != null)
             {
-                <p class="card-text"><strong>Минимално допустими размери за улов:</strong> @Model.MinimalLegalSize см.</p>
+                <p><strong>Минимално допустим размер за улов: </strong>@Model.MinimalLegalSize<text>см.</text></p>
             }
-            <div id="map" class="z-depth-1-half map-responsive" style="height: 63vh"></div>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                Виж локации
+            </button>
+        </div>
+    </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLongTitle">Локации на които е хванат @Model.Name</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="map" class="z-depth-1-half map-responsive" style="height: 60vh"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
-
 @section Scripts{
     <script src="https://maps.googleapis.com/maps/api/js?key=@(this.configuration["GoogleMaps:ApiKey"])&callback=initMap&libraries=&v=weekly"
             defer></script>
@@ -40,17 +53,17 @@
 
         function initMap() {
             const myLatlng = { lat: 42.7249925, lng: 25.4833039 };
+
             map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 7.5,
+                zoom: 6.7,
                 center: myLatlng,
             });
 
-            debugger;
             @foreach (var trip in Model.Trips)
             {
                 @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude });
             }
-        }  
+        }
 
         function addMarker(location) {
             const marker = new google.maps.Marker({
@@ -61,7 +74,6 @@
                 position: location,
             });
             markers.push(marker);
-            debugger;
         }
     </script>
 }
