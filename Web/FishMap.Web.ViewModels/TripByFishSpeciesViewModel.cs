@@ -6,9 +6,9 @@
     {
         public int FishCaughtCount { get; set; }
 
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
-        public string CaougtByUserName { get; set; }
+        public string CaughtByUserName { get; set; }
 
         public string FishingMethod { get; set; }
 

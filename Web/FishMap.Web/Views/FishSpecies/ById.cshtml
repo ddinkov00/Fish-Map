@@ -58,14 +58,37 @@
                 zoom: 6.7,
                 center: myLatlng,
             });
-
             @foreach (var trip in Model.Trips)
             {
-                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude });
+                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.CaughtByUserName', date: '@trip.Date', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount' });
             }
         }
 
-        function addMarker(location) {
+        function addMarker(location, tripData) {
+            switch (tripData.fishingMethod) {
+                case 'BaitFishing':
+                    tripData.fishingMethod = 'Риболов на жива стръв';
+                    break;
+                case 'FlyFishing':
+                    tripData.fishingMethod = 'Риболов на муха';
+                    break;
+                case 'Spinning':
+                    tripData.fishingMethod = 'Спининг';
+                    break;
+                case 'Trolling':
+                    tripData.fishingMethod = 'Тролинг';
+                    break;
+            }
+
+            const contentString = '<p style="color: black"><strong>Рибар: </strong>' + tripData.username + '</p>'
+                + '<p style="color: black"><strong>Метод на риболов: </strong>' + tripData.fishingMethod + '</p>'
+                + '<p style="color: black"><strong>Брой хванати риби: </strong>' + tripData.caughtsCount + '</p>'
+                + '<p style="color: black"><strong>Дата: </strong>' + tripData.date + '</p>';
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+            
             const marker = new google.maps.Marker({
                 icon: "http://maps.google.com/mapfiles/kml/shapes/fishing.png",
                 draggable: false,
@@ -73,6 +96,11 @@
                 map: map,
                 position: location,
             });
+
+            marker.addListener("click", () => {
+                infoWindow.open(map, marker);
+            });
+
             markers.push(marker);
         }
     </script>

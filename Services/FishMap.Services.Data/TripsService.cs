@@ -51,8 +51,8 @@
                 .Select(t => new TripByFishSpeciesViewModel
                 {
                     FishCaughtCount = t.FishCaughtCount,
-                    Date = t.Date,
-                    CaougtByUserName = t.User.UserName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtByUserName = t.User.UserName,
                     FishingMethod = t.FishingMethod.ToString(),
                     Latitude = t.LocationLatitude,
                     Longtitude = t.LocationLongtitude,
