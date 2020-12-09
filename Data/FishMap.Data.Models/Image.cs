@@ -6,7 +6,7 @@
 
     public class Image : BaseDeletableModel<int>
     {
-        public string Uri { get; set; }
+        public string Url { get; set; }
 
         public virtual FishSpecies FishSpecies { get; set; }
 

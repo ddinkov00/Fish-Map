@@ -22,7 +22,7 @@
         {
             await this.imageRepository.AddAsync(new Image
             {
-                Uri = imageUri,
+                Url = imageUri,
                 FishId = fishId,
             });
 

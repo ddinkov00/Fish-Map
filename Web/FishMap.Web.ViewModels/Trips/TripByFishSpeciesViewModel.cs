@@ -1,4 +1,4 @@
-﻿namespace FishMap.Web.ViewModels
+﻿namespace FishMap.Web.ViewModels.Trips
 {
     using System;
 
@@ -8,7 +8,9 @@
 
         public string Date { get; set; }
 
-        public string CaughtByUserName { get; set; }
+        public string Email { get; set; }
+
+        public string Username => this.Email.Split("@")[0];
 
         public string FishingMethod { get; set; }
 

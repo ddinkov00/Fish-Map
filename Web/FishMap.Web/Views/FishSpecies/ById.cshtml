@@ -5,13 +5,13 @@
     ViewData["Title"] = this.Model.Name;
 }
 
-    <div class="card mb-5 container mt-3 bg-transparent text-center">
+    <div class="card mb-5 container mt-3 bg-transparent text-center border-0">
         <h3 class="card-title text-center">@Model.Name</h3>
         <hr class="alert-info" />
         <div class="row">
-            <div class="col-md-2"></div>
-            <img class="card-img-top rounded col-md-8" src="@Model.ImageUri" alt="Card image cap">
-            <div class="col-md-2"></div>
+            <div class="col-md-2 col-1"></div>
+            <img class="card-img-top rounded col-md-8 col-10" src="@Model.ImageUri" alt="Card image cap">
+            <div class="col-md-2 col-1"></div>
         </div>
         <div class="card-body">
             <p class="card-text"><strong>Описание: </strong>@Model.Description</p>
@@ -60,7 +60,7 @@
             });
             @foreach (var trip in Model.Trips)
             {
-                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.CaughtByUserName', date: '@trip.Date', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount' });
+                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.Username', date: '@trip.Date', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount' });
             }
         }
 
@@ -92,13 +92,18 @@
             const marker = new google.maps.Marker({
                 icon: "http://maps.google.com/mapfiles/kml/shapes/fishing.png",
                 draggable: false,
+                optimized: true,
                 animation: google.maps.Animation.DROP,
                 map: map,
                 position: location,
             });
 
-            marker.addListener("click", () => {
+            marker.addListener("mouseover", () => {
                 infoWindow.open(map, marker);
+            });
+
+            marker.addListener("mouseout", () => {
+                infoWindow.close();
             });
 
             markers.push(marker);

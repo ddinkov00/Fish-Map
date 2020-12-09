@@ -13,6 +13,7 @@
     {
         private const string AddFishActionName = "Create";
         private const string AddFishControllerName = "Fish";
+
         private readonly ITripsService tripService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -43,6 +44,27 @@
             var tripToFishData = await this.tripService.CreateAsync(input, user.Id);
 
             return this.RedirectToAction(AddFishActionName, AddFishControllerName, tripToFishData);
+        }
+
+        [Authorize]
+        public IActionResult All(int id = 1)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 9;
+
+            var viewModel = new TripListViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.tripService.GetAllCount(),
+                Trips = this.tripService.GetAllForPaging(id, itemsPerPage),
+            };
+
+            return this.View(viewModel);
         }
     }
 }

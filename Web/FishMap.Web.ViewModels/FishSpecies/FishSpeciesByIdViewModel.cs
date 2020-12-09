@@ -2,6 +2,8 @@
 {
     using System.Collections.Generic;
 
+    using FishMap.Web.ViewModels.Trips;
+
     public class FishSpeciesByIdViewModel
     {
         public int Id { get; set; }

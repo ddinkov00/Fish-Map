@@ -9,7 +9,6 @@
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels;
     using FishMap.Web.ViewModels.Trips;
-    using Microsoft.AspNetCore.Routing;
 
     public class TripsService : ITripsService
     {
@@ -52,11 +51,37 @@
                 {
                     FishCaughtCount = t.FishCaughtCount,
                     Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
-                    CaughtByUserName = t.User.UserName,
+                    Email = t.User.Email,
                     FishingMethod = t.FishingMethod.ToString(),
                     Latitude = t.LocationLatitude,
                     Longtitude = t.LocationLongtitude,
                 });
+        }
+
+        public IEnumerable<TripInListViewModel> GetAllForPaging(int page, int itemsPerPage = 9)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(t => new TripInListViewModel
+                {
+                    Id = t.Id,
+                    WaterPoolName = t.WaterPoolName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtFishSpecies = t.FishCaught
+                        .Select(fs => fs.FishSpecies.Name),
+                    ImageUrl = t.FishCaught.FirstOrDefault()
+                        .Images.FirstOrDefault().Url,
+                    Email = t.User.Email,
+                    FishCaughtCount = t.FishCaughtCount,
+                }).ToList();
+        }
+
+        public int GetAllCount()
+        {
+            return this.tripsRepository
+                .AllAsNoTracking()
+                .Count();
         }
     }
 }

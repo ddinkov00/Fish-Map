@@ -1,18 +1,22 @@
 ﻿@model FishMap.Web.ViewModels.FishSpecies.FishSpeciesListViewModel
 @{
-    ViewData["Title"] = "All";
+    ViewData["Title"] = "Видовете риби в България";
 }
 
-<h1 class="h1 text-center pt-3">Видовете риби в България</h1>
+<h1 class="h2 text-center pt-3">@ViewData["Title"]</h1>
 <hr class="alert-info" />
 <div class="row">
     @foreach (var fishSpecies in this.Model.FishSpecies)
     {
-        <div class="card col-md-4 bg-transparent">
-            <img class="card-img-top rounded img-fluid" src="@fishSpecies.ImageUri" height="190" alt="Card image cap">
+        <div class="card col-md-4">
+            <div class="mt-2">
+                <img class="card-img-top rounded img-fluid" src="@fishSpecies.ImageUri" alt="Card image cap">
+            </div>
             <div class="card-body">
-                <h5 class="card-title">@fishSpecies.Name</h5>
+                <h5 class="card-title text-justify">@fishSpecies.Name</h5>
                 <p class="card-text">@(fishSpecies.Descripton.Split(".")[0] + "...")</p>
+            </div>
+            <div class="card-footer bg-dark border-white">
                 <a asp-action="ById" asp-route-id="@fishSpecies.Id" class="btn btn-primary">Повече информация</a>
             </div>
         </div>

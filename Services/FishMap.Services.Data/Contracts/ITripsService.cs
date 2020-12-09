@@ -11,5 +11,9 @@
         Task<AddFishRouteData> CreateAsync(CreateTripInputModel input, string userId);
 
         IEnumerable<TripByFishSpeciesViewModel> GetAllByFishSpecies(int fishSpeciesId);
+
+        IEnumerable<TripInListViewModel> GetAllForPaging(int page, int itemsPerPage);
+
+        int GetAllCount();
     }
 }

@@ -29,7 +29,7 @@
                 .Count();
         }
 
-        public IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerPage = 12)
+        public IEnumerable<FishSpeciesInListViewModel> GetAllForPaging(int page, int itemsPerPage = 9)
         {
             var fishSpecies = this.fishSpeciesRepository.AllAsNoTracking()
                 .OrderBy(x => x.Name)
@@ -38,7 +38,7 @@
                 .Select(x => new FishSpeciesInListViewModel
                 {
                     Id = x.Id,
-                    ImageUri = x.Image.Uri,
+                    ImageUri = x.Image.Url,
                     Name = x.Name,
                     IsCarnivore = x.IsCarnivore,
                     Descripton = x.Description,
@@ -69,7 +69,7 @@
                     Name = fs.Name,
                     Description = fs.Description,
                     MinimalLegalSize = fs.MinimumLegalSize,
-                    ImageUri = fs.Image.Uri,
+                    ImageUri = fs.Image.Url,
                     Trips = this.tripsService.GetAllByFishSpecies(id),
                 })
                 .FirstOrDefault();

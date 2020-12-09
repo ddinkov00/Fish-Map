@@ -1,17 +1,15 @@
 ﻿namespace FishMap.Web.Controllers
 {
-    using System;
-    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
+
     using CloudinaryDotNet;
     using FishMap.Services;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Fish;
     using FishMap.Web.ViewModels.Trips;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Routing;
 
     public class FishController : Controller
     {

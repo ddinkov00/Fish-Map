@@ -32,7 +32,7 @@
                     MinimumLegalSize = fishSpecies.MinimumLegalSize,
                     Image = new Image
                     {
-                        Uri = fishSpecies.Image.Uri,
+                        Url = fishSpecies.Image.Uri,
                     },
                 };
 

@@ -1,0 +1,31 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+@model FishMap.Web.ViewModels.Trips.TripListViewModel
+@{
+    ViewData["Title"] = "All";
+}
+
+<h1 class="h2 text-center pt-3">@ViewData["Title"]</h1>
+<hr class="alert-info" />
+<div class="row">
+    @foreach (var trip in Model.Trips)
+    {
+        <div class="card col-md-4">
+            <img class="card-img-top mt-3" src="@trip.ImageUrl" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title text-justify">@trip.WaterPoolName</h5>
+                <p class="card-text"><strong>Рибар: </strong>@trip.Username</p>
+                <p class="card-text"><strong>Дата: </strong>@trip.Date</p>
+                <p class="card-text"><strong>Видове хванати риби: </strong>@string.Join(", ", trip.CaughtFishSpecies.Distinct())</p>
+                <p class="card-text"><strong>Брой хванати риби: </strong>@trip.FishCaughtCount</p>
+            </div>
+            <div class="card-footer bg-dark border-white">
+                <a asp-action="ById" asp-route-id="@trip.Id" class="btn btn-primary">Повече информация</a>
+            </div>
+        </div>
+    }
+</div>
+<hr class="alert-info" />
+<partial name="_PagingPartial" model="@Model" />
+<br>
+
