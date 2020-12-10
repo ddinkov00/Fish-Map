@@ -66,5 +66,12 @@
 
             return this.View(viewModel);
         }
+
+        [Authorize]
+        public IActionResult ById(int id)
+        {
+            var viewModel = this.tripService.GetById(id);
+            return this.View(viewModel);
+        }
     }
 }

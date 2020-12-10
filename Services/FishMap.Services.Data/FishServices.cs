@@ -1,5 +1,7 @@
 ﻿namespace FishMap.Services.Data
 {
+    using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FishMap.Data.Common.Repositories;
@@ -29,6 +31,20 @@
             await this.fishRepository.AddAsync(fishToAdd);
             await this.fishRepository.SaveChangesAsync();
             return fishToAdd.Id;
+        }
+
+        public IEnumerable<FishInTripViewModel> GetAllByTripId(int tripId)
+        {
+            return this.fishRepository.AllAsNoTracking()
+                .Where(f => f.TripId == tripId)
+                .Select(f => new FishInTripViewModel
+                {
+                    FishSpecies = f.FishSpecies.Name,
+                    Weight = f.Weight,
+                    Length = f.Length,
+                    ImagesUrls = f.Images
+                        .Select(i => i.Url),
+                });
         }
     }
 }

@@ -7,16 +7,19 @@
     using FishMap.Data.Common.Repositories;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
-    using FishMap.Web.ViewModels;
     using FishMap.Web.ViewModels.Trips;
 
     public class TripsService : ITripsService
     {
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
+        private readonly IFishServices fishServices;
 
-        public TripsService(IDeletableEntityRepository<Trip> tripsRepository)
+        public TripsService(
+            IDeletableEntityRepository<Trip> tripsRepository,
+            IFishServices fishServices)
         {
             this.tripsRepository = tripsRepository;
+            this.fishServices = fishServices;
         }
 
         public async Task<AddFishRouteData> CreateAsync(CreateTripInputModel input, string userId)
@@ -82,6 +85,23 @@
             return this.tripsRepository
                 .AllAsNoTracking()
                 .Count();
+        }
+
+        public TripByIdViewModel GetById(int id)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .Where(t => t.Id == id)
+                .Select(t => new TripByIdViewModel
+                {
+                    WaterPoolName = t.WaterPoolName,
+                    Description = t.Description,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year} г.",
+                    FishingMethod = t.FishingMethod.ToString(),
+                    LocationLatitude = t.LocationLatitude,
+                    LoacationLongtitude = t.LocationLongtitude,
+                    UserEmail = t.User.Email,
+                    Fish = this.fishServices.GetAllByTripId(id),
+                }).FirstOrDefault();
         }
     }
 }

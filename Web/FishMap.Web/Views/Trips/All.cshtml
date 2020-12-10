@@ -2,7 +2,7 @@
 @inject IConfiguration configuration
 @model FishMap.Web.ViewModels.Trips.TripListViewModel
 @{
-    ViewData["Title"] = "All";
+    ViewData["Title"] = "Излети";
 }
 
 <h1 class="h2 text-center pt-3">@ViewData["Title"]</h1>
@@ -11,7 +11,7 @@
     @foreach (var trip in Model.Trips)
     {
         <div class="card col-md-4">
-            <img class="card-img-top mt-3" src="@trip.ImageUrl" alt="Card image cap">
+            <img class="img-thumbnail mt-3" src="@trip.ImageUrl" alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title text-justify">@trip.WaterPoolName</h5>
                 <p class="card-text"><strong>Рибар: </strong>@trip.Username</p>

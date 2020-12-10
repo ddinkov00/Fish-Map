@@ -15,5 +15,7 @@
         IEnumerable<TripInListViewModel> GetAllForPaging(int page, int itemsPerPage);
 
         int GetAllCount();
+
+        TripByIdViewModel GetById(int id);
     }
 }

@@ -1,0 +1,124 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+@model FishMap.Web.ViewModels.Trips.TripByIdViewModel
+@{
+    ViewData["Title"] = "ById";
+}
+
+
+<div class="container">
+    <div class="row mt-4">
+        <div class="col-md-8">
+            <div id="map" class="z-depth-1-half map-responsive rounded img-thumbnail" style="height: 40vh"></div>
+        </div>
+        <div class="col-md-4 mt-md-5">
+            <p><strong>Име на воден басейн: </strong>@Model.WaterPoolName</p>
+            <p><strong>Рибар: </strong>@Model.Username</p>
+            <p><strong>Дата: </strong>@Model.Date</p>
+            <p><strong>Метод на риболов: </strong>@Model.FishingMethod</p>
+            <p><strong>Описание: </strong>@Model.Description</p>
+        </div>
+    </div>
+    <div class="row mt-3 mb-5">
+        <table class="table table-striped table-dark text-center table-responsive-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Вид</th>
+                    <th scope="col">Дължина (см.)</th>
+                    <th scope="col">Тегло (кг.)</th>
+                    <th scope="col">Снимки</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Fish.Count(); i++)
+                {
+                    <tr>
+                        <td>@Model.Fish.ElementAt(i).FishSpecies</td>
+                        <td>@Model.Fish.ElementAt(i).Length</td>
+                        <td>@(String.Format("{0:0.000}", Model.Fish.ElementAt(i).Weight))</td>
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="@("#exampleModal" + i.ToString())">
+                                Виж снимки
+                            </button>
+                            <div class="modal fade" id="@("exampleModal" + i.ToString())" tabindex="-1" role="dialog" aria-labelledby="@("#exampleModalLabel" + i.ToString())" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="@("exampleModalLabel" + i.ToString())">Снимки</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div id="@("carouselExampleControls" + i.ToString())" class="carousel slide" data-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    @for (int y = 0; y < Model.Fish.ElementAt(i).ImagesUrls.Count(); y++)
+                                                    {
+                                                        if (y == 0)
+                                                        {
+                                                            <div class="carousel-item active">
+                                                                <img class="d-block w-100" src="@Model.Fish.ElementAt(i).ImagesUrls.ElementAt(y)" alt="Image">
+                                                            </div>
+                                                        }
+                                                        else
+                                                        {
+                                                            <div class="carousel-item">
+                                                                <img class="d-block w-100" src="@Model.Fish.ElementAt(i).ImagesUrls.ElementAt(y)" alt="Image">
+                                                            </div>
+                                                        }
+                                                    }
+                                                </div>
+                                                <a class="carousel-control-prev" href="@("#carouselExampleControls" + i.ToString())" role="button" data-slide="prev">
+                                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Previous</span>
+                                                </a>
+                                                <a class="carousel-control-next" href="@("#carouselExampleControls" + i.ToString())" role="button" data-slide="next">
+                                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                    <span class="sr-only">Next</span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(this.configuration["GoogleMaps:ApiKey"])&callback=initMap&libraries=&v=weekly"
+            defer></script>
+    <script>
+        let markers = [];
+        let map;
+
+        function initMap() {
+            const location = { lat: @Model.LocationLatitude, lng: @Model.LoacationLongtitude };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 12,
+                center: location,
+            });
+
+            const marker = new google.maps.Marker({
+                icon: "http://maps.google.com/mapfiles/kml/shapes/fishing.png",
+                draggable: false,
+                optimized: true,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                position: location,
+            });
+
+            markers.push(marker);
+        }
+    </script>
+}
+
