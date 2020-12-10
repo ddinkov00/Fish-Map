@@ -16,6 +16,8 @@
         [Required]
         public string WaterPoolName { get; set; }
 
+        public string Description { get; set; }
+
         public DateTime MeetingTime { get; set; }
 
         [Range(-90, 90)]

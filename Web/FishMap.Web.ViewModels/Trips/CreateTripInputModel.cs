@@ -29,10 +29,9 @@
         public float LocationLongtitude { get; set; }
 
         [Display(Name = "Дата")]
-        [CustomDateAttribute]
+        [TripDateAttribute]
         public DateTime Date { get; set; }
 
-        [Required]
         [Display(Name = "Метод на риболов")]
         public int FishingMethod { get; set; }
     }

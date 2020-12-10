@@ -9,6 +9,7 @@
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Fish;
     using FishMap.Web.ViewModels.Trips;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class FishController : Controller
@@ -33,6 +34,7 @@
             this.cloudinary = cloudinary;
         }
 
+        [Authorize]
         public IActionResult Create(AddFishRouteData routeData)
         {
             this.ViewData["FishCount"] = routeData.FishCount;
@@ -45,10 +47,9 @@
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> Create(CreateFishListInputModel input)
         {
-            var sw = new Stopwatch();
-            sw.Start();
             var tripId = input.TripId;
 
             foreach (var fishModel in input.Fish)

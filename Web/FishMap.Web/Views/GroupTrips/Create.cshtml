@@ -1,8 +1,9 @@
 ﻿@using Microsoft.Extensions.Configuration
 @inject IConfiguration configuration
-@model FishMap.Web.ViewModels.Trips.CreateTripInputModel
+@model FishMap.Web.ViewModels.GroupTrips.GroupTripCreateInputModel
 @{
-    this.ViewData["Title"] = "Добавяне на риболовен излет";
+    this.ViewData["Title"] = "Добавяне на групов излет";
+    var fishSpeciesItems = this.Model.FishSpeciesItems.Select(x => new SelectListItem(x.Name, x.Id));
 }
 <div class="pb-4 ">
     <h1 class="text-center pt-3">@this.ViewData["Title"]</h1>
@@ -15,41 +16,66 @@
                 <span asp-validation-for="WaterPoolName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FishCaughtCout"></label>
-                <input type="number" min="0" max="100" asp-for="FishCaughtCout" class="form-control" />
-                <span asp-validation-for="FishCaughtCout" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Description"></label>
                 <textarea asp-for="Description" rows="5" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date"></label>
-                <input type="date" asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="FreeSeats"></label>
+                <input type="number" min="0" max="10" asp-for="FreeSeats" class="form-control" />
+                <span asp-validation-for="FreeSeats" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="FishingMethod"></label>
-                <select asp-for="FishingMethod" class="form-control"
+                <label asp-for="MeetingTime"></label>
+                <input type="datetime-local" asp-for="MeetingTime" class="form-control" />
+                <span asp-validation-for="MeetingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FishingTime"></label>
+                <input type="datetime-local" asp-for="FishingTime" class="form-control" />
+                <span asp-validation-for="FishingTime" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TargetFishSpeciesId"></label>
+                <select asp-for="TargetFishSpeciesId" name="TargetFishSpeciesId"
+                        class="form-control" asp-items="fishSpeciesItems">
+                    <option>Изберете вид на рибата</option>
+                </select>
+                <span asp-validation-for="TargetFishSpeciesId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="FishingMethodId"></label>
+                <select asp-for="FishingMethodId" class="form-control"
                         asp-items="Html.GetEnumSelectList<FishMap.Data.Models.FishingMethodEnum>()">
                     <option>Избери метод на риболов...</option>
                 </select>
-                <span asp-validation-for="FishingMethod" class="text-danger"></span>
+                <span asp-validation-for="FishingMethodId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="latitude" type="hidden" asp-for="LocationLatitude" class="form-control" />
-                <span asp-validation-for="LocationLatitude" class="text-danger"></span>
+                <input id="latitude" type="hidden" asp-for="MeetingSpotLatitude" class="form-control" />
+                <span asp-validation-for="MeetingSpotLatitude" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input id="longtitude" type="hidden" asp-for="LocationLongtitude" class="form-control" />
-                <span asp-validation-for="LocationLongtitude" class="text-danger"></span>
+                <input id="longtitude" type="hidden" asp-for="MeetingSpotLongtitude" class="form-control" />
+                <span asp-validation-for="MeetingSpotLongtitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="latitude" type="hidden" asp-for="FishingSpotLatitude" class="form-control" />
+                <span asp-validation-for="FishingSpotLatitude" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input id="longtitude" type="hidden" asp-for="FishingSpotLongtitude" class="form-control" />
+                <span asp-validation-for="FishingSpotLongtitude" class="text-danger"></span>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group mt-md-6">
                 <label>Изберете място на излета</label>
-                <div id="map" class="z-depth-1-half map-responsive" style="height: 68vh"></div>
+                <div id="map" class="z-depth-1-half map-responsive" style="height: 86vh"></div>
+            </div>
+            <div class="btn-group" role="group" aria-label="Basic example">
+                <button type="button" class="btn btn-primary">Изберете място на тръгване</button>
+                <button type="button" class="btn btn-primary">Изберете риболовно място</button>
             </div>
         </div>
         <div class="col-12 text-center">
@@ -69,7 +95,7 @@
         function initMap() {
             const myLatlng = { lat: 42.7249925, lng: 25.4833039 };
             map = new google.maps.Map(document.getElementById("map"), {
-                zoom: 7.5,
+                zoom: 7.1,
                 center: myLatlng,
             });
 
