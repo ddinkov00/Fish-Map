@@ -4,6 +4,8 @@
 
     public class TripByFishSpeciesViewModel
     {
+        public int Id { get; set; }
+
         public int FishCaughtCount { get; set; }
 
         public string Date { get; set; }

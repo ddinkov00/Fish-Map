@@ -52,6 +52,7 @@
                 .Where(t => t.FishCaught.Any(f => f.FishSpeciesId == fishSpeciesId))
                 .Select(t => new TripByFishSpeciesViewModel
                 {
+                    Id = t.Id,
                     FishCaughtCount = t.FishCaughtCount,
                     Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
                     Email = t.User.Email,

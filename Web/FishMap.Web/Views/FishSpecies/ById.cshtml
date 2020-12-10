@@ -60,7 +60,7 @@
             });
             @foreach (var trip in Model.Trips)
             {
-                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.Username', date: '@trip.Date', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount' });
+                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.Username', date: '@trip.Date', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount', id: '@trip.Id' });
             }
         }
 
@@ -96,6 +96,11 @@
                 animation: google.maps.Animation.DROP,
                 map: map,
                 position: location,
+            });
+
+            marker.addListener('click', () => {
+                const href = "/Trips/ById/" + tripData.id;
+                window.location.href = href;
             });
 
             marker.addListener("mouseover", () => {

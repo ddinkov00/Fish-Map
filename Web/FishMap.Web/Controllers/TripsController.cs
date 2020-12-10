@@ -9,7 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
-    public class TripsController : Controller
+    public class TripsController : BaseController
     {
         private const string AddFishActionName = "Create";
         private const string AddFishControllerName = "Fish";
