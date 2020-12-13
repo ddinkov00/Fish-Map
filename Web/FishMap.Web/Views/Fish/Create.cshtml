@@ -2,7 +2,7 @@
 @model FishMap.Web.ViewModels.Fish.CreateFishListInputModel
 @{
     ViewData["Title"] = "Добавяне на риби";
-    var fishSpeciesItems = this.Model.FishSpeciesItems.Select(x => new SelectListItem(x.Name, x.Id));
+    //var fishSpeciesItems = this.Model.FishSpeciesItems.Select(x => new SelectListItem(x.Name, x.Id));
 }
     <div>
         <h1 class="text-center pt-3">@this.ViewData["Title"]</h1>
@@ -32,7 +32,7 @@
                     <div class="form-group col-md-3">
                         <label asp-for="FishInputModel.FishSpeciesId"></label>
                         <select asp-for="FishInputModel.FishSpeciesId" name="Fish[@i].FishSpeciesId"
-                                class="form-control" asp-items="fishSpeciesItems">
+                                class="form-control" asp-items="@this.Model.FishSpeciesItems.Select(x => new SelectListItem(x.Name, x.Id))">
                             <option>Изберете вид на рибата</option>
                         </select>
                         <span asp-validation-for="FishInputModel.FishSpeciesId" class="text-danger"></span>

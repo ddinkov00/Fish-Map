@@ -50,6 +50,13 @@
         [Authorize]
         public async Task<IActionResult> Create(CreateFishListInputModel input)
         {
+            if (!this.ModelState.IsValid)
+            {
+                var viewModel = new CreateFishListInputModel();
+                viewModel.FishSpeciesItems = this.fishSpeciesService.GetAllForSelectList();
+                return this.View(viewModel);
+            }
+
             var tripId = input.TripId;
 
             foreach (var fishModel in input.Fish)

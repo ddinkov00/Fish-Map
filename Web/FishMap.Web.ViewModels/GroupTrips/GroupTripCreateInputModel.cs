@@ -20,7 +20,7 @@
         public string Description { get; set; }
 
         [Display(Name = "Време на тръгване")]
-        [GroupTripDateattribute]
+        [UpToYearAttribute]
         public DateTime MeetingTime { get; set; }
 
         [Range(-90, 90)]
@@ -30,7 +30,7 @@
         public float MeetingSpotLongtitude { get; set; }
 
         [Display(Name = "Начало на риболовния излет")]
-        [GroupTripDateattribute]
+        [UpToYearAttribute]
         public DateTime FishingTime { get; set; }
 
         [Range(-90, 90)]

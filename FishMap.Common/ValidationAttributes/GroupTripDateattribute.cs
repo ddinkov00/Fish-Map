@@ -3,13 +3,13 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class GroupTripDateattribute : RangeAttribute
+    public class GroupTripDateAttribute : RangeAttribute
     {
-        public GroupTripDateattribute()
+        public GroupTripDateAttribute()
             : base(
                 typeof(DateTime),
-                DateTime.Now.AddYears(+1).ToShortDateString(),
-                DateTime.Now.ToShortDateString())
+                DateTime.Now.ToShortDateString(),
+                DateTime.Now.AddYears(+1).ToShortDateString())
         {
         }
     }

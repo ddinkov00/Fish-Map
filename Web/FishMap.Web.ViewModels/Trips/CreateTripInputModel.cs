@@ -29,7 +29,7 @@
         public float LocationLongtitude { get; set; }
 
         [Display(Name = "Дата")]
-        [TripDateAttribute]
+        [WithinThreeYearsAttribute]
         public DateTime Date { get; set; }
 
         [Display(Name = "Метод на риболов")]
