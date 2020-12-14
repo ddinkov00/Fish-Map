@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FishMap.Services.Data.Contracts
+﻿namespace FishMap.Services.Data.Contracts
 {
-    class ITownsService
+    public interface ITownsService
     {
+        string GetNearestCity(float latitude, float longtitude);
     }
 }

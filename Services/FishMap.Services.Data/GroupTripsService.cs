@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
 
@@ -12,10 +13,14 @@
 
     public class GroupTripsService : IGroupTripsService
     {
+        private readonly ITownsService townsService;
         private readonly IDeletableEntityRepository<GroupTrip> groupTripsRepository;
 
-        public GroupTripsService(IDeletableEntityRepository<GroupTrip> groupTripsRepository)
+        public GroupTripsService(
+            ITownsService townsService,
+            IDeletableEntityRepository<GroupTrip> groupTripsRepository)
         {
+            this.townsService = townsService;
             this.groupTripsRepository = groupTripsRepository;
         }
 
@@ -41,6 +46,29 @@
             await this.groupTripsRepository.SaveChangesAsync();
 
             return groupTrip.Id;
+        }
+
+        public int GetAllCount()
+        {
+            return this.groupTripsRepository.AllAsNoTracking().Count();
+        }
+
+        public IEnumerable<GroupTripInListViewModel> GetAllForPaging(int page, int itemsPerPage = 9)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(gt => new GroupTripInListViewModel
+                {
+                    Id = gt.Id,
+                    WaterPoolName = gt.WaterPoolName,
+                    TargetFishSecies = gt.TargetFishSpecies.Name,
+                    HostEmail = gt.Host.UserName,
+                    GuestsCount = gt.Guests.Count,
+                    AllSeats = gt.FreeSeats,
+                    TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
+                    NearestCity = this.townsService.GetNearestCity(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                }).ToList();
         }
     }
 }

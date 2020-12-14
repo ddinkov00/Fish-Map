@@ -49,5 +49,24 @@
 
             return this.Redirect("/");
         }
+
+        public IActionResult All(int id = 1)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 9;
+            var viewModel = new GroupTripsListViewModel
+            {
+                GroupTrips = this.groupTripsService.GetAllForPaging(id, itemsPerPage),
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.groupTripsService.GetAllCount(),
+            };
+
+            return this.View(viewModel);
+        }
     }
 }

@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FishMap.Web.ViewModels.GroupTrips
+﻿namespace FishMap.Web.ViewModels.GroupTrips
 {
-    class GroupTripsListViewModel
+    using System.Collections.Generic;
+
+    public class GroupTripsListViewModel : PagingViewModel
     {
+        public IEnumerable<GroupTripInListViewModel> GroupTrips { get; set; }
     }
 }

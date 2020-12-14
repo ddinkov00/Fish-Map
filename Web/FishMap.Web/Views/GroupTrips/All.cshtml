@@ -1,7 +1,34 @@
-﻿
+﻿@model FishMap.Web.ViewModels.GroupTrips.GroupTripsListViewModel
 @{
-    ViewData["Title"] = "All";
+    ViewData["Title"] = "Групови излети";
 }
 
-<h1>All</h1>
+<h1 class="h2 text-center pt-3">@ViewData["Title"]</h1>
+<hr class="alert-info" />
+<div class="container">
+    <div class="row">
+        @foreach (var groupTript in Model.GroupTrips)
+        {
+            <div class="card col-md-4">
+                <div class="card-body">
+                    <h5 class="card-title"><strong>Хост: </strong>@groupTript.HostUsername</h5>
+                    Свободни места:
+                    <div class="progress card-title">
+                        <div class="progress-bar w-@((groupTript.FreeSeats/groupTript.AllSeats)*100)" role="progressbar" aria-valuenow="@groupTript.FreeSeats.ToString()" aria-valuemin="0" aria-valuemax="@groupTript.AllSeats.ToString()">@groupTript.FreeSeats</div>
+                    </div>
+                    <p class="card-text"><strong>Област: </strong>@groupTript.NearestCity</p>
+                    <p class="card-text"><strong>Воден басейн: </strong>@groupTript.WaterPoolName</p>
+                    <p class="card-text"><strong>Дата: </strong>@groupTript.TripDate</p>
+                    <p class="card-text"><strong>Таргетиран вид риба: </strong>@groupTript.TargetFishSecies</p>
+                </div>
+                <div class="card-footer bg-dark border-white">
+                    <a asp-action="ById" asp-route-id="@groupTript.Id" class="btn btn-primary">Повече информация</a>
+                </div>
+            </div>
+        }
+    </div>
+    <hr class="alert-info" />
+    <partial name="_PagingPartial" model="@Model" />
+    <br>
+</div>
 
