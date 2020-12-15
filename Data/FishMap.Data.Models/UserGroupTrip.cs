@@ -2,14 +2,14 @@
 {
     using System.ComponentModel.DataAnnotations;
 
-    public class UserGroupTrip
+    using FishMap.Data.Common.Models;
+
+    public class UserGroupTrip : BaseDeletableModel<int>
     {
-        public int Id { get; set; }
-
         [Required]
-        public string HostId { get; set; }
+        public string GuestId { get; set; }
 
-        public virtual ApplicationUser Host { get; set; }
+        public virtual ApplicationUser Guest { get; set; }
 
         public int GroupTripId { get; set; }
 

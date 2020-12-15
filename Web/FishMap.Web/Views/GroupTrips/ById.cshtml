@@ -1,0 +1,124 @@
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+@model FishMap.Web.ViewModels.GroupTrips.GroupTripByIdViewModel
+@{
+    ViewData["Title"] = "ById";
+}
+
+    <div class="container mb-md-0 mb-5">
+        <div class="row mt-3">
+            <div class="col-md-6 align-self-center">
+                <div id="map" class="z-depth-1-half map-responsive rounded img-thumbnail" style="height: 45vh"></div>
+            </div>
+            <div class="col-md-6 align-self-center mt-3 mt-md-0">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Хост: </strong>
+                        <span>@Model.HostName</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Воден басейн: </strong>
+                        <span>@Model.WaterPoolName</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Описание: </strong>
+                        <span>@Model.Description</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Време на среща: </strong>
+                        <span>@Model.MeetingDate</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Начало на излета: </strong>
+                        <span>@Model.FishingDate</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Метод на риболов: </strong>
+                        <span>@Model.FishingMethod</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Таргетиран вид риба: </strong>
+                        <span>@Model.TargetFishSpecies</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <hr class="alert-info" />
+        @if (1 > 0)
+        {
+            <div class="row">
+                <div class="col-md-12">
+                    <h4>Записани потребители:</h4>
+                    <ul class="list-group">
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>dimitardinkov1971 </strong>
+                            <span><a href="#" class="btn-sm btn-primary">Съобщение</a></span>
+                        </li>
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                            <strong>a.tyrpov </strong>
+                            <span><a href="#" class="btn-sm btn-primary">Съобщение</a></span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="alert-info" />
+        }
+        <div class="row mb-5">
+            <div class="col-md-10">
+                <ul class="list-group">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <strong>Брой записани потребители: </strong>
+                        <span>@Model.GuestsCount</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-2 text-right mb-3 mb-md-4 mt-2 mt-md-0">
+                <a asp-action="Enroll" asp-route-id="@Model" class="btn-lg btn-primary">Запиши се</a>
+            </div>
+        </div>
+    </div>
+
+@section Scripts{
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(this.configuration["GoogleMaps:ApiKey"])&callback=initMap&libraries=&v=weekly"
+            defer></script>
+
+    <script>
+        let markers = [];
+        let map;
+
+        function initMap() {
+            const vehicleMarcerIcon = 'http://maps.google.com/mapfiles/kml/shapes/cabs.png';
+            const fishMarkerIcon = 'http://maps.google.com/mapfiles/kml/shapes/fishing.png';
+
+            const meetingLocation = { lat: @Model.MeetingLatitude, lng: @Model.MeetingLongtitude };
+            const fishingLocation = { lat: @Model.FishingLatitude, lng: @Model.FishingLongtitude };
+            const bulgariaLatLng = { lat: 42.7249925, lng: 25.4833039 };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 7,
+                center: bulgariaLatLng,
+            });
+
+            const meetingMarker = new google.maps.Marker({
+                icon: vehicleMarcerIcon,
+                draggable: false,
+                optimized: true,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                position: meetingLocation,
+            });
+
+            const fishingMarker = new google.maps.Marker({
+                icon: fishMarkerIcon,
+                draggable: false,
+                optimized: true,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                position: fishingLocation,
+            });
+
+            markers.push([meetingMarker, fishingMarker]);
+        }
+    </script>
+}
+

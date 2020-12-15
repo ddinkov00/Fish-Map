@@ -1,6 +1,7 @@
 ﻿namespace FishMap.Web.Controllers
 {
     using System.Threading.Tasks;
+
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.GroupTrips;
@@ -50,6 +51,7 @@
             return this.Redirect("/");
         }
 
+        [Authorize]
         public IActionResult All(int id = 1)
         {
             if (id <= 0)
@@ -66,6 +68,13 @@
                 ItemsCount = this.groupTripsService.GetAllCount(),
             };
 
+            return this.View(viewModel);
+        }
+
+        [Authorize]
+        public IActionResult ById(int id)
+        {
+            var viewModel = this.groupTripsService.GetById(id);
             return this.View(viewModel);
         }
     }
