@@ -11,6 +11,7 @@
         public Trip()
         {
             this.FishCaught = new HashSet<Fish>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Required]
@@ -39,5 +40,7 @@
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Fish> FishCaught { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

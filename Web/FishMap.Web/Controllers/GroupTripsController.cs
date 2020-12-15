@@ -1,5 +1,6 @@
 ﻿namespace FishMap.Web.Controllers
 {
+    using System;
     using System.Threading.Tasks;
 
     using FishMap.Data.Models;
@@ -46,9 +47,9 @@
             }
 
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.groupTripsService.CreateAsync(inputModel, user.Id);
+            var id = await this.groupTripsService.CreateAsync(inputModel, user.Id);
 
-            return this.Redirect("/");
+            return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
         [Authorize]
@@ -72,10 +73,29 @@
         }
 
         [Authorize]
-        public IActionResult ById(int id)
+        public IActionResult ById(EnrollRouteData routeData)
         {
-            var viewModel = this.groupTripsService.GetById(id);
+            this.ViewBag.Error = routeData.ErrorMessage;
+            var viewModel = this.groupTripsService.GetById(routeData.Id);
             return this.View(viewModel);
+        }
+
+        [Authorize]
+        public async Task<IActionResult> Enroll(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            try
+            {
+                await this.groupTripsService.EnrollUser(id, user.Id);
+            }
+            catch (OperationCanceledException e)
+            {
+                var errorMessage = e.Message;
+                return this.RedirectToAction(nameof(this.ById), new EnrollRouteData { Id = id, ErrorMessage = errorMessage });
+            }
+
+            return this.RedirectToAction(nameof(this.ById), new EnrollRouteData { Id = id });
         }
     }
 }
