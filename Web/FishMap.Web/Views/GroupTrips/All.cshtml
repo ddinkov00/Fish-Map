@@ -13,10 +13,10 @@
                 <div class="card-body">
                     <h5 class="card-title"><strong>Хост: </strong>@groupTript.HostUsername</h5>
                     Свободни места:
-                    <div class="progress bg-white">
-                        <div class="progress-bar alert-success" role="progressbar" style="width: @((groupTript.FreeSeats*100)/groupTript.AllSeats)%;" aria-valuenow="@groupTript.FreeSeats" aria-valuemin="0" aria-valuemax="@groupTript.AllSeats">@groupTript.FreeSeats</div>
+                    <div class="progress card-title">
+                        <div class="progress-bar alert-success w-@((groupTript.FreeSeats/groupTript.AllSeats)*100)" role="progressbar" aria-valuenow="@groupTript.FreeSeats.ToString()" aria-valuemin="0" aria-valuemax="@groupTript.AllSeats.ToString()">@groupTript.FreeSeats</div>
                     </div>
-                    <p class="card-text mt-2"><strong>Област: </strong>@groupTript.NearestCity</p>
+                    <p class="card-text"><strong>Област: </strong>@groupTript.NearestCity</p>
                     <p class="card-text"><strong>Воден басейн: </strong>@groupTript.WaterPoolName</p>
                     <p class="card-text"><strong>Дата: </strong>@groupTript.TripDate</p>
                     <p class="card-text"><strong>Таргетиран вид риба: </strong>@groupTript.TargetFishSecies</p>

@@ -19,7 +19,6 @@ namespace FishMap.Data.Models
             this.GroupTripsGuest = new HashSet<UserGroupTrip>();
             this.GroupTripsHost = new HashSet<GroupTrip>();
             this.Trips = new HashSet<Trip>();
-            this.Comments = new HashSet<Comment>();
         }
 
         // Audit info
@@ -43,7 +42,5 @@ namespace FishMap.Data.Models
         public virtual ICollection<GroupTrip> GroupTripsHost { get; set; }
 
         public virtual ICollection<Trip> Trips { get; set; }
-
-        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
