@@ -3,21 +3,12 @@
     ViewData["Title"] = "Излети";
 }
 
-    <div class="row">
-        <h1 class="h2 text-center pt-3 col-md-10">@ViewData["Title"]</h1>
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown button
-            </button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-            </div>
-        </div>
-    </div>
+<h1 class="h2 text-center mt-3">@ViewData["Title"]</h1>
 <hr class="alert-info" />
 <div class="container">
+    <div class="row">
+
+    </div>
     <div class="row">
         @foreach (var trip in Model.Trips)
         {
@@ -25,6 +16,7 @@
                 <img class="img-thumbnail mt-3" src="@trip.ImageUrl" alt="Card image cap">
                 <div class="card-body">
                     <h5 class="card-title text-justify">@trip.WaterPoolName</h5>
+                    <p class="card-text"><strong>Област: </strong>@trip.NearestTownName</p>
                     <p class="card-text"><strong>Рибар: </strong>@trip.Username</p>
                     <p class="card-text"><strong>Дата: </strong>@trip.Date</p>
                     <p class="card-text"><strong>Видове хванати риби: </strong>@string.Join(", ", trip.CaughtFishSpecies.Distinct())</p>

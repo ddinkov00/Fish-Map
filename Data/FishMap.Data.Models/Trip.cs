@@ -39,6 +39,10 @@
 
         public virtual ApplicationUser User { get; set; }
 
+        public int NearestTownId { get; set; }
+
+        public virtual Town NearestTown { get; set; }
+
         public virtual ICollection<Fish> FishCaught { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }

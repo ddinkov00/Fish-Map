@@ -74,7 +74,7 @@
                     GuestsCount = gt.Guests.Count,
                     AllSeats = gt.FreeSeats,
                     TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
-                    NearestCity = this.townsService.GetNearestCity(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                    NearestCity = this.townsService.GetNearestTownName(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
                 }).ToList();
         }
 

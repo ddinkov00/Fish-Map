@@ -14,15 +14,18 @@
         private readonly ICommentService commentService;
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
         private readonly IFishServices fishServices;
+        private readonly ITownsService townsService;
 
         public TripsService(
             ICommentService commentService,
             IDeletableEntityRepository<Trip> tripsRepository,
-            IFishServices fishServices)
+            IFishServices fishServices,
+            ITownsService townsService)
         {
             this.commentService = commentService;
             this.tripsRepository = tripsRepository;
             this.fishServices = fishServices;
+            this.townsService = townsService;
         }
 
         public async Task<AddFishRouteData> CreateAsync(CreateTripInputModel input, string userId)
@@ -37,6 +40,7 @@
                 Date = input.Date,
                 FishingMethod = (FishingMethodEnum)input.FishingMethod,
                 UserId = userId,
+                NearestTownId = this.townsService.GetNearestTownId(input.LocationLatitude, input.LocationLongtitude),
             };
 
             await this.tripsRepository.AddAsync(trip);
@@ -81,6 +85,7 @@
                         .Images.FirstOrDefault().Url,
                     Email = t.User.Email,
                     FishCaughtCount = t.FishCaughtCount,
+                    NearestTownName = t.NearestTown.Name,
                 }).ToList();
         }
 

@@ -20,5 +20,7 @@
         public string Username => this.Email.Split('@')[0];
 
         public int FishCaughtCount { get; set; }
+
+        public string NearestTownName { get; set; }
     }
 }

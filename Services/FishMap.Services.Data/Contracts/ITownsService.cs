@@ -2,6 +2,8 @@
 {
     public interface ITownsService
     {
-        string GetNearestCity(float latitude, float longtitude);
+        string GetNearestTownName(float latitude, float longtitude);
+
+        int GetNearestTownId(float latitude, float longtitude);
     }
 }
