@@ -11,13 +11,16 @@
 
     public class TripsService : ITripsService
     {
+        private readonly ICommentService commentService;
         private readonly IDeletableEntityRepository<Trip> tripsRepository;
         private readonly IFishServices fishServices;
 
         public TripsService(
+            ICommentService commentService,
             IDeletableEntityRepository<Trip> tripsRepository,
             IFishServices fishServices)
         {
+            this.commentService = commentService;
             this.tripsRepository = tripsRepository;
             this.fishServices = fishServices;
         }
@@ -94,6 +97,7 @@
                 .Where(t => t.Id == id)
                 .Select(t => new TripByIdViewModel
                 {
+                    Id = t.Id,
                     WaterPoolName = t.WaterPoolName,
                     Description = t.Description,
                     Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year} г.",
@@ -102,7 +106,23 @@
                     LoacationLongtitude = t.LocationLongtitude,
                     UserEmail = t.User.Email,
                     Fish = this.fishServices.GetAllByTripId(id),
+                    Comments = this.commentService.GetComentsByTripId(id),
                 }).FirstOrDefault();
+        }
+
+        public IEnumerable<TripForMapViewModel> GetAllForMap()
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .Select(t => new TripForMapViewModel
+                {
+                    Id = t.Id,
+                    Latitude = t.LocationLatitude,
+                    Longtitude = t.LocationLongtitude,
+                    Date = t.Date,
+                    CreatedByUserEmail = t.User.Email,
+                    FishingMethod = t.FishingMethod.ToString(),
+                    FishCaughtCount = t.FishCaught.Count(),
+                });
         }
     }
 }

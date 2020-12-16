@@ -53,7 +53,7 @@
         }
 
         [Authorize]
-        public IActionResult All(int id = 1)
+        public IActionResult Upcoming(int id = 1)
         {
             if (id <= 0)
             {
@@ -63,10 +63,10 @@
             const int itemsPerPage = 9;
             var viewModel = new GroupTripsListViewModel
             {
-                GroupTrips = this.groupTripsService.GetAllForPaging(id, itemsPerPage),
+                GroupTrips = this.groupTripsService.GetUpcomingForPaging(id, itemsPerPage),
                 ItemsPerPage = itemsPerPage,
                 PageNumber = id,
-                ItemsCount = this.groupTripsService.GetAllCount(),
+                ItemsCount = this.groupTripsService.GetUpcomingCount(),
             };
 
             return this.View(viewModel);

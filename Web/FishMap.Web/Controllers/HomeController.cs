@@ -8,7 +8,9 @@
     using CloudinaryDotNet;
     using FishMap.Data;
     using FishMap.Services;
+    using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels;
+    using FishMap.Web.ViewModels.Trips;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
 
@@ -17,28 +19,36 @@
         private readonly ApplicationDbContext db;
         private readonly Cloudinary cloudinary;
         private readonly ICloudinaryService cloudinaryService;
+        private readonly ITripsService tripsService;
 
         public HomeController(
             ApplicationDbContext db,
             Cloudinary cloudinary,
-            ICloudinaryService cloudinaryService)
+            ICloudinaryService cloudinaryService,
+            ITripsService tripsService)
         {
             this.db = db;
             this.cloudinary = cloudinary;
             this.cloudinaryService = cloudinaryService;
+            this.tripsService = tripsService;
         }
 
         public IActionResult Index()
         {
-            return this.View();
+            var viewModel = new AllTripsForMapViewModel
+            {
+                Trips = this.tripsService.GetAllForMap(),
+            };
+
+            return this.View(viewModel);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public async Task<IActionResult> Upload(ICollection<IFormFile> files)
         {
             await this.cloudinaryService.UploadAsync(this.cloudinary, files);
             return this.Redirect("/");
-        }
+        }*/
 
         public IActionResult Privacy()
         {

@@ -73,5 +73,10 @@
             var viewModel = this.tripService.GetById(id);
             return this.View(viewModel);
         }
+
+        public IActionResult Ordered()
+        {
+            return this.View();
+        }
     }
 }

@@ -52,14 +52,17 @@
             return groupTrip.Id;
         }
 
-        public int GetAllCount()
-        {
-            return this.groupTripsRepository.AllAsNoTracking().Count();
-        }
-
-        public IEnumerable<GroupTripInListViewModel> GetAllForPaging(int page, int itemsPerPage = 9)
+        public int GetUpcomingCount()
         {
             return this.groupTripsRepository.AllAsNoTracking()
+                .Where(gt => gt.FishingTime > DateTime.Now)
+                .Count();
+        }
+
+        public IEnumerable<GroupTripInListViewModel> GetUpcomingForPaging(int page, int itemsPerPage = 9)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .Where(gt => gt.FishingTime > DateTime.Now)
                 .Skip((page - 1) * itemsPerPage)
                 .Take(itemsPerPage)
                 .Select(gt => new GroupTripInListViewModel

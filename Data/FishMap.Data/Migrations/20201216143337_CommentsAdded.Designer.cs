@@ -4,14 +4,16 @@ using FishMap.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FishMap.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201216143337_CommentsAdded")]
+    partial class CommentsAdded
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,9 +163,6 @@ namespace FishMap.Data.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("ParentId")
-                        .HasColumnType("int");
-
                     b.Property<int>("TripId")
                         .HasColumnType("int");
 
@@ -173,8 +172,6 @@ namespace FishMap.Data.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("IsDeleted");
-
-                    b.HasIndex("ParentId");
 
                     b.HasIndex("TripId");
 
@@ -643,10 +640,6 @@ namespace FishMap.Data.Migrations
 
             modelBuilder.Entity("FishMap.Data.Models.Comment", b =>
                 {
-                    b.HasOne("FishMap.Data.Models.Comment", "Parent")
-                        .WithMany()
-                        .HasForeignKey("ParentId");
-
                     b.HasOne("FishMap.Data.Models.Trip", "Trip")
                         .WithMany("Comments")
                         .HasForeignKey("TripId")
@@ -654,7 +647,7 @@ namespace FishMap.Data.Migrations
                         .IsRequired();
 
                     b.HasOne("FishMap.Data.Models.ApplicationUser", "User")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("UserId");
                 });
 

@@ -17,5 +17,7 @@
         int GetAllCount();
 
         TripByIdViewModel GetById(int id);
+
+        IEnumerable<TripForMapViewModel> GetAllForMap();
     }
 }

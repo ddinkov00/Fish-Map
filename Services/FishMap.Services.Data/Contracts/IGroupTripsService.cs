@@ -9,11 +9,11 @@
     {
         Task<int> CreateAsync(GroupTripCreateInputModel inputModel, string userId);
 
-        IEnumerable<GroupTripInListViewModel> GetAllForPaging(int page, int itemsPerPage);
+        IEnumerable<GroupTripInListViewModel> GetUpcomingForPaging(int page, int itemsPerPage);
 
         GroupTripByIdViewModel GetById(int id);
 
-        int GetAllCount();
+        int GetUpcomingCount();
 
         Task EnrollUser(int id, string userId);
     }

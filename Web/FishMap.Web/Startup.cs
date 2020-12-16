@@ -79,6 +79,7 @@
             services.AddTransient<IImageServices, ImageServices>();
             services.AddTransient<IGroupTripsService, GroupTripsService>();
             services.AddTransient<ITownsService, TownsService>();
+            services.AddTransient<ICommentService, CommentService>();
 
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],

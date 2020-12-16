@@ -1,14 +1,94 @@
-﻿@using FishMap.Common
+﻿@using Microsoft.Extensions.Configuration
+@inject IConfiguration configuration
+@using FishMap.Common
+@model FishMap.Web.ViewModels.Trips.AllTripsForMapViewModel
 @{
     this.ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome to @GlobalConstants.SystemName!</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+    <div class="container">
+        <div class="text-center mt-2">
+            <h1 class="display-4">Добре дошли във @GlobalConstants.SystemName!</h1>
+            <p>Ходи ви се за риба но не знаете къде да отидете? Попаднали сте на правилното място! 
+            <br /> Разгледайте картата по-долу и цъкнете върху маркер за да видите повече информация за риболовния излет!</p>
+        </div>
+        <hr class="alert-info" />
+        <div class="row mb-4 pt-2 ">
+            <div class="col-md-1"></div>
+            <div id="map" class="z-depth-1-half map-responsive col-md-10 mb-5" style="height: 66vh"></div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
 
-<form class="form-group col-4" method="post" enctype="multipart/form-data" asp-controller="Home" asp-action="Upload">
-    <input class="form-control" type="file" name="files" multiple />
-    <button class="btn btn-primary" type="submit" value="">Submit</button>
-</form>
+@section Scripts{ 
+    <script src="https://maps.googleapis.com/maps/api/js?key=@(this.configuration["GoogleMaps:ApiKey"])&callback=initMap&libraries=&v=weekly"
+            defer></script>
+
+    <script>
+        let markers = [];
+        let map;
+
+        function initMap() {
+            const myLatlng = { lat: 42.7249925, lng: 25.4833039 };
+
+            map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 7,
+                center: myLatlng,
+            });
+            @foreach (var trip in Model.Trips)
+            {
+                @:addMarker({ lat: @trip.Latitude, lng: @trip.Longtitude }, { username: '@trip.CreatedByUsername', date: '@trip.DateAsString', fishingMethod: '@trip.FishingMethod', caughtsCount: '@trip.FishCaughtCount', id: '@trip.Id' });
+            }
+        }
+
+        function addMarker(location, tripData) {
+            switch (tripData.fishingMethod) {
+                case 'BaitFishing':
+                    tripData.fishingMethod = 'Риболов на жива стръв';
+                    break;
+                case 'FlyFishing':
+                    tripData.fishingMethod = 'Риболов на муха';
+                    break;
+                case 'Spinning':
+                    tripData.fishingMethod = 'Спининг';
+                    break;
+                case 'Trolling':
+                    tripData.fishingMethod = 'Тролинг';
+                    break;
+            }
+
+            const contentString = '<p style="color: black"><strong>Рибар: </strong>' + tripData.username + '</p>'
+                + '<p style="color: black"><strong>Метод на риболов: </strong>' + tripData.fishingMethod + '</p>'
+                + '<p style="color: black"><strong>Брой хванати риби: </strong>' + tripData.caughtsCount + '</p>'
+                + '<p style="color: black"><strong>Дата: </strong>' + tripData.date + '</p>';
+
+            const infoWindow = new google.maps.InfoWindow({
+                content: contentString,
+            });
+
+            const marker = new google.maps.Marker({
+                icon: "http://maps.google.com/mapfiles/kml/shapes/fishing.png",
+                draggable: false,
+                optimized: true,
+                animation: google.maps.Animation.DROP,
+                map: map,
+                position: location,
+            });
+
+            marker.addListener('click', () => {
+                const href = "/Trips/ById/" + tripData.id;
+                window.location.href = href;
+            });
+
+            marker.addListener("mouseover", () => {
+                infoWindow.open(map, marker);
+            });
+
+            marker.addListener("mouseout", () => {
+                infoWindow.close();
+            });
+
+            markers.push(marker);
+        }
+    </script>
+}
