@@ -6,7 +6,13 @@
 }
 
     <div class="container mb-md-0 mb-5">
-        <div class="row mt-3">
+        @if (this.ViewBag.Error != null)
+        {
+            <div class="alert alert-danger mt-2" role="alert">
+                @this.ViewBag.Error
+            </div>
+        }
+        <div class="row">
             <div class="col-md-6 align-self-center">
                 <div id="map" class="z-depth-1-half map-responsive rounded img-thumbnail" style="height: 45vh"></div>
             </div>
@@ -44,25 +50,7 @@
             </div>
         </div>
         <hr class="alert-info" />
-        @if (1 > 0)
-        {
-            <div class="row">
-                <div class="col-md-12">
-                    <h4>Записани потребители:</h4>
-                    <ul class="list-group">
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <strong>dimitardinkov1971 </strong>
-                            <span><a href="#" class="btn-sm btn-primary">Съобщение</a></span>
-                        </li>
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <strong>a.tyrpov </strong>
-                            <span><a href="#" class="btn-sm btn-primary">Съобщение</a></span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <hr class="alert-info" />
-        }
+        <partial name="_ListUsersPartial" model="@Model" />
         <div class="row mb-5">
             <div class="col-md-10">
                 <ul class="list-group">
@@ -73,7 +61,7 @@
                 </ul>
             </div>
             <div class="col-md-2 text-right mb-3 mb-md-4 mt-2 mt-md-0">
-                <a asp-action="Enroll" asp-route-id="@Model" class="btn-lg btn-primary">Запиши се</a>
+                <a asp-action="Enroll" asp-route-id="@Model.Id" class=" btn btn-lg btn-primary">Запиши се</a>
             </div>
         </div>
     </div>

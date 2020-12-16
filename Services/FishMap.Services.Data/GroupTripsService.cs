@@ -16,13 +16,16 @@
     {
         private readonly ITownsService townsService;
         private readonly IDeletableEntityRepository<GroupTrip> groupTripsRepository;
+        private readonly IDeletableEntityRepository<UserGroupTrip> userGroupTripsRepository;
 
         public GroupTripsService(
             ITownsService townsService,
-            IDeletableEntityRepository<GroupTrip> groupTripsRepository)
+            IDeletableEntityRepository<GroupTrip> groupTripsRepository,
+            IDeletableEntityRepository<UserGroupTrip> userGroupTripsRepository)
         {
             this.townsService = townsService;
             this.groupTripsRepository = groupTripsRepository;
+            this.userGroupTripsRepository = userGroupTripsRepository;
         }
 
         public async Task<int> CreateAsync(GroupTripCreateInputModel inputModel, string userId)
@@ -101,6 +104,37 @@
                             Email = x.Guest.Email,
                         }),
                 }).FirstOrDefault();
+        }
+
+        public async Task EnrollUser(int id, string userId)
+        {
+            var groupTrip = this.groupTripsRepository.All()
+                .Where(gt => gt.Id == id)
+                .FirstOrDefault();
+
+            if (this.userGroupTripsRepository.AllAsNoTracking().Any(x => x.GroupTripId == id && x.GuestId == userId))
+            {
+                throw new OperationCanceledException("Вече сте записани за този излет!");
+            }
+
+            if (groupTrip.HostId == userId)
+            {
+                throw new OperationCanceledException("Не може да се запишете за излет създаден от вас!");
+            }
+
+            if (groupTrip.Guests.Count() + 1 > groupTrip.FreeSeats)
+            {
+                throw new OperationCanceledException("Всички места за този излет вече са заети!");
+            }
+
+            var userGroupTrip = new UserGroupTrip
+            {
+                GuestId = userId,
+                GroupTripId = id,
+            };
+
+            groupTrip.Guests.Add(userGroupTrip);
+            await this.groupTripsRepository.SaveChangesAsync();
         }
     }
 }

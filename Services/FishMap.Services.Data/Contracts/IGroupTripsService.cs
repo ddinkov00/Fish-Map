@@ -14,5 +14,7 @@
         GroupTripByIdViewModel GetById(int id);
 
         int GetAllCount();
+
+        Task EnrollUser(int id, string userId);
     }
 }

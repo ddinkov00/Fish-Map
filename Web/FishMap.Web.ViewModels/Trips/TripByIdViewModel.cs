@@ -1,7 +1,6 @@
 ﻿namespace FishMap.Web.ViewModels.Trips
 {
     using System.Collections.Generic;
-
     using FishMap.Web.ViewModels.Fish;
 
     public class TripByIdViewModel
