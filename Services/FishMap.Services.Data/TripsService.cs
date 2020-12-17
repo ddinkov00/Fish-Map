@@ -129,5 +129,89 @@
                     FishCaughtCount = t.FishCaught.Count(),
                 });
         }
+
+        public IEnumerable<TripInListViewModel> OrderAllByCreatedOnAsc(int page, int itemsPerPage)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .OrderBy(t => t.CreatedOn)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(t => new TripInListViewModel
+                {
+                    Id = t.Id,
+                    WaterPoolName = t.WaterPoolName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtFishSpecies = t.FishCaught
+                        .Select(fs => fs.FishSpecies.Name),
+                    ImageUrl = t.FishCaught.FirstOrDefault()
+                        .Images.FirstOrDefault().Url,
+                    Email = t.User.Email,
+                    FishCaughtCount = t.FishCaughtCount,
+                    NearestTownName = t.NearestTown.Name,
+                }).ToList();
+        }
+
+        public IEnumerable<TripInListViewModel> OrderAllByCreatedOnDesc(int page, int itemsPerPage)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .OrderByDescending(t => t.CreatedOn)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(t => new TripInListViewModel
+                {
+                    Id = t.Id,
+                    WaterPoolName = t.WaterPoolName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtFishSpecies = t.FishCaught
+                        .Select(fs => fs.FishSpecies.Name),
+                    ImageUrl = t.FishCaught.FirstOrDefault()
+                        .Images.FirstOrDefault().Url,
+                    Email = t.User.Email,
+                    FishCaughtCount = t.FishCaughtCount,
+                    NearestTownName = t.NearestTown.Name,
+                }).ToList();
+        }
+
+        public IEnumerable<TripInListViewModel> OrderAllByTripDateAsc(int page, int itemsPerPage)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .OrderBy(t => t.Date)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(t => new TripInListViewModel
+                {
+                    Id = t.Id,
+                    WaterPoolName = t.WaterPoolName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtFishSpecies = t.FishCaught
+                        .Select(fs => fs.FishSpecies.Name),
+                    ImageUrl = t.FishCaught.FirstOrDefault()
+                        .Images.FirstOrDefault().Url,
+                    Email = t.User.Email,
+                    FishCaughtCount = t.FishCaughtCount,
+                    NearestTownName = t.NearestTown.Name,
+                }).ToList();
+        }
+
+        public IEnumerable<TripInListViewModel> OrderAllByTripDateDesc(int page, int itemsPerPage)
+        {
+            return this.tripsRepository.AllAsNoTracking()
+                .OrderByDescending(t => t.Date)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(t => new TripInListViewModel
+                {
+                    Id = t.Id,
+                    WaterPoolName = t.WaterPoolName,
+                    Date = $"{t.Date.Day}/{t.Date.Month}/{t.Date.Year}г.",
+                    CaughtFishSpecies = t.FishCaught
+                        .Select(fs => fs.FishSpecies.Name),
+                    ImageUrl = t.FishCaught.FirstOrDefault()
+                        .Images.FirstOrDefault().Url,
+                    Email = t.User.Email,
+                    FishCaughtCount = t.FishCaughtCount,
+                    NearestTownName = t.NearestTown.Name,
+                }).ToList();
+        }
     }
 }

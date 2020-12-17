@@ -74,9 +74,41 @@
             return this.View(viewModel);
         }
 
-        public IActionResult Ordered()
+        public IActionResult OrderBy(string order, int id = 1)
         {
-            return this.View();
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 9;
+
+            var viewModel = new TripListViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.tripService.GetAllCount(),
+            };
+
+            switch (order)
+            {
+                case "CreatedOnDesc":
+                    viewModel.Trips = this.tripService.OrderAllByCreatedOnDesc(id, itemsPerPage);
+                    break;
+                case "CreatedOnAsc":
+                    viewModel.Trips = this.tripService.OrderAllByCreatedOnAsc(id, itemsPerPage);
+                    break;
+                case "TripDateDesc":
+                    viewModel.Trips = this.tripService.OrderAllByTripDateDesc(id, itemsPerPage);
+                    break;
+                case "TripDateAsc":
+                    viewModel.Trips = this.tripService.OrderAllByTripDateAsc(id, itemsPerPage);
+                    break;
+                default:
+                    return this.NotFound();
+            }
+
+            return this.View(viewModel);
         }
     }
 }

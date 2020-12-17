@@ -19,5 +19,13 @@
         TripByIdViewModel GetById(int id);
 
         IEnumerable<TripForMapViewModel> GetAllForMap();
+
+        IEnumerable<TripInListViewModel> OrderAllByCreatedOnAsc(int page, int itemsPerPage);
+
+        IEnumerable<TripInListViewModel> OrderAllByCreatedOnDesc(int page, int itemsPerPage);
+
+        IEnumerable<TripInListViewModel> OrderAllByTripDateAsc(int page, int itemsPerPage);
+
+        IEnumerable<TripInListViewModel> OrderAllByTripDateDesc(int page, int itemsPerPage);
     }
 }
