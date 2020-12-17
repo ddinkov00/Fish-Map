@@ -20,5 +20,13 @@
         bool IsUserCreator(string userId, int groupTripId);
 
         Task Delete(int groupTripId);
+
+        IEnumerable<GroupTripInListViewModel> OrderUpcomingByCreatedOnAsc(int page, int itemsPerPage);
+
+        IEnumerable<GroupTripInListViewModel> OrderUpcomingByCreatedOnDesc(int page, int itemsPerPage);
+
+        IEnumerable<GroupTripInListViewModel> OrderUpcomingByTripDateAsc(int page, int itemsPerPage);
+
+        IEnumerable<GroupTripInListViewModel> OrderUpcomingByTripDateDesc(int page, int itemsPerPage);
     }
 }

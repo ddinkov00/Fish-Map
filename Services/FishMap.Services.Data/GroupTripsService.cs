@@ -159,5 +159,81 @@
             this.groupTripsRepository.Delete(trip);
             await this.groupTripsRepository.SaveChangesAsync();
         }
+
+        public IEnumerable<GroupTripInListViewModel> OrderUpcomingByCreatedOnAsc(int page, int itemsPerPage)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .OrderBy(gt => gt.CreatedOn)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(gt => new GroupTripInListViewModel
+                {
+                    Id = gt.Id,
+                    WaterPoolName = gt.WaterPoolName,
+                    TargetFishSecies = gt.TargetFishSpecies.Name,
+                    HostEmail = gt.Host.UserName,
+                    GuestsCount = gt.Guests.Count,
+                    AllSeats = gt.FreeSeats,
+                    TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
+                    NearestCity = this.townsService.GetNearestTownName(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                }).ToList();
+        }
+
+        public IEnumerable<GroupTripInListViewModel> OrderUpcomingByCreatedOnDesc(int page, int itemsPerPage)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .OrderByDescending(gt => gt.CreatedOn)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(gt => new GroupTripInListViewModel
+                {
+                    Id = gt.Id,
+                    WaterPoolName = gt.WaterPoolName,
+                    TargetFishSecies = gt.TargetFishSpecies.Name,
+                    HostEmail = gt.Host.UserName,
+                    GuestsCount = gt.Guests.Count,
+                    AllSeats = gt.FreeSeats,
+                    TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
+                    NearestCity = this.townsService.GetNearestTownName(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                }).ToList();
+        }
+
+        public IEnumerable<GroupTripInListViewModel> OrderUpcomingByTripDateAsc(int page, int itemsPerPage)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .OrderBy(gt => gt.MeetingTime)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(gt => new GroupTripInListViewModel
+                {
+                    Id = gt.Id,
+                    WaterPoolName = gt.WaterPoolName,
+                    TargetFishSecies = gt.TargetFishSpecies.Name,
+                    HostEmail = gt.Host.UserName,
+                    GuestsCount = gt.Guests.Count,
+                    AllSeats = gt.FreeSeats,
+                    TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
+                    NearestCity = this.townsService.GetNearestTownName(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                }).ToList();
+        }
+
+        public IEnumerable<GroupTripInListViewModel> OrderUpcomingByTripDateDesc(int page, int itemsPerPage)
+        {
+            return this.groupTripsRepository.AllAsNoTracking()
+                .OrderByDescending(gt => gt.MeetingTime)
+                .Skip((page - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .Select(gt => new GroupTripInListViewModel
+                {
+                    Id = gt.Id,
+                    WaterPoolName = gt.WaterPoolName,
+                    TargetFishSecies = gt.TargetFishSpecies.Name,
+                    HostEmail = gt.Host.UserName,
+                    GuestsCount = gt.Guests.Count,
+                    AllSeats = gt.FreeSeats,
+                    TripDate = $"{gt.FishingTime.Day}/{gt.FishingTime.Month}/{gt.FishingTime.Year}г.",
+                    NearestCity = this.townsService.GetNearestTownName(gt.FishingSpotLatitued, gt.FishingSpotLongtitude),
+                }).ToList();
+        }
     }
 }

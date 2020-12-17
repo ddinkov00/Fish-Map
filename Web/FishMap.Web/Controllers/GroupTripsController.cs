@@ -112,5 +112,42 @@
             await this.groupTripsService.Delete(id);
             return this.RedirectToAction("Upcoming");
         }
+
+        public IActionResult OrderBy(string order, int id = 1)
+        {
+            if (id <= 0)
+            {
+                return this.NotFound();
+            }
+
+            const int itemsPerPage = 9;
+
+            var viewModel = new GroupTripsListViewModel
+            {
+                ItemsPerPage = itemsPerPage,
+                PageNumber = id,
+                ItemsCount = this.groupTripsService.GetUpcomingCount(),
+            };
+
+            switch (order)
+            {
+                case "CreatedOnDesc":
+                    viewModel.GroupTrips = this.groupTripsService.OrderUpcomingByCreatedOnDesc(id, itemsPerPage);
+                    break;
+                case "CreatedOnAsc":
+                    viewModel.GroupTrips = this.groupTripsService.OrderUpcomingByCreatedOnAsc(id, itemsPerPage);
+                    break;
+                case "TripDateDesc":
+                    viewModel.GroupTrips = this.groupTripsService.OrderUpcomingByTripDateDesc(id, itemsPerPage);
+                    break;
+                case "TripDateAsc":
+                    viewModel.GroupTrips = this.groupTripsService.OrderUpcomingByTripDateAsc(id, itemsPerPage);
+                    break;
+                default:
+                    return this.NotFound();
+            }
+
+            return this.View(viewModel);
+        }
     }
 }
