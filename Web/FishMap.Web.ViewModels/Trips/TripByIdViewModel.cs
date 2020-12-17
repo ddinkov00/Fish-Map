@@ -24,6 +24,10 @@
 
         public string Username => this.UserEmail.Split('@')[0];
 
+        public bool IsUserCreator { get; set; }
+
+        public bool IsUserAdmin { get; set; }
+
         public IEnumerable<FishInTripViewModel> Fish { get; set; }
 
         public IEnumerable<CommentViewModel> Comments { get; set; }

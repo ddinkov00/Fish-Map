@@ -19,6 +19,13 @@
                 <li class="list-group-item"><strong>Метод на риболов: </strong>@Model.FishingMethod</li>
                 <li class="list-group-item"><strong>Описание: </strong>@Model.Description</li>
             </ul>
+            @if (Model.IsUserCreator || Model.IsUserAdmin)
+            {
+                <div class="d-flex flex-row-reverse mt-3">
+                    <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger">Изтрий</a>
+                    <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary mr-1">Редактирай</a>
+                </div>
+            }
         </div>
     </div>
     <hr class="alert-info" />

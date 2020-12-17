@@ -1,7 +1,7 @@
 ﻿namespace FishMap.Web.Controllers
 {
     using System.Threading.Tasks;
-
+    using FishMap.Common;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.Trips;
@@ -68,9 +68,14 @@
         }
 
         [Authorize]
-        public IActionResult ById(int id)
+        public async Task<IActionResult> ById(int id)
         {
+            var user = await this.userManager.GetUserAsync(this.User);
+
             var viewModel = this.tripService.GetById(id);
+            viewModel.IsUserAdmin = await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName);
+            viewModel.IsUserCreator = this.tripService.IsUserCreator(user.Id, id);
+
             return this.View(viewModel);
         }
 
@@ -109,6 +114,21 @@
             }
 
             return this.View(viewModel);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName)
+                && !this.tripService.IsUserCreator(user.Id, id))
+            {
+                return this.Unauthorized();
+            }
+
+            await this.tripService.Delete(id);
+
+            return this.RedirectToAction("All");
         }
     }
 }

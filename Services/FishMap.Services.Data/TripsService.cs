@@ -213,5 +213,25 @@
                     NearestTownName = t.NearestTown.Name,
                 }).ToList();
         }
+
+        public bool IsUserCreator(string userId, int tripId)
+        {
+            var tripUserId = this.tripsRepository.All()
+                .Where(t => t.Id == tripId)
+                .Select(t => t.UserId)
+                .FirstOrDefault();
+
+            return tripUserId == userId;
+        }
+
+        public async Task Delete(int tripId)
+        {
+            var trip = this.tripsRepository.All()
+                .Where(t => t.Id == tripId)
+                .FirstOrDefault();
+
+            this.tripsRepository.Delete(trip);
+            await this.tripsRepository.SaveChangesAsync();
+        }
     }
 }

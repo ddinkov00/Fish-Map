@@ -27,5 +27,9 @@
         IEnumerable<TripInListViewModel> OrderAllByTripDateAsc(int page, int itemsPerPage);
 
         IEnumerable<TripInListViewModel> OrderAllByTripDateDesc(int page, int itemsPerPage);
+
+        bool IsUserCreator(string userId, int tripId);
+
+        Task Delete(int tripId);
     }
 }

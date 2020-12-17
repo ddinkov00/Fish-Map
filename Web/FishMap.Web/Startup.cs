@@ -46,6 +46,7 @@
                     options.SignIn.RequireConfirmedAccount = false;
                     options.Lockout.MaxFailedAccessAttempts = 5;
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.User.RequireUniqueEmail = true;
                 })
                 .AddRoles<ApplicationRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 

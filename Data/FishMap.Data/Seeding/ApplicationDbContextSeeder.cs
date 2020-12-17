@@ -29,6 +29,7 @@
                               new SettingsSeeder(),
                               new TownsSeeder(),
                               new FishSpeciesSeeder(),
+                              new AdminSeeder(),
                           };
 
             foreach (var seeder in seeders)
