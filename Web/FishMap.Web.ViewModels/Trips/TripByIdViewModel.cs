@@ -1,6 +1,7 @@
 ﻿namespace FishMap.Web.ViewModels.Trips
 {
     using System.Collections.Generic;
+
     using FishMap.Web.ViewModels.Comments;
     using FishMap.Web.ViewModels.Fish;
 

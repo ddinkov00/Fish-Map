@@ -36,6 +36,10 @@
 
         public int AllSeats { get; set; }
 
+        public bool IsUserAdmin { get; set; }
+
+        public bool IsUserCreator { get; set; }
+
         public int FreeSeats => this.AllSeats - this.GuestsCount;
 
         public IEnumerable<UserForGroupTripByIdViewModel> Guests { get; set; }

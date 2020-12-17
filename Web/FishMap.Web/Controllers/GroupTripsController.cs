@@ -2,7 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
-
+    using FishMap.Common;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels.GroupTrips;
@@ -10,6 +10,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class GroupTripsController : BaseController
     {
         private readonly UserManager<ApplicationUser> userManager;
@@ -27,7 +28,6 @@
         }
 
         [HttpGet]
-        [Authorize]
         public IActionResult Create()
         {
             var viewModel = new GroupTripCreateInputModel();
@@ -36,7 +36,6 @@
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(GroupTripCreateInputModel inputModel)
         {
             if (!this.ModelState.IsValid)
@@ -52,7 +51,6 @@
             return this.RedirectToAction(nameof(this.ById), new { id });
         }
 
-        [Authorize]
         public IActionResult Upcoming(int id = 1)
         {
             if (id <= 0)
@@ -72,15 +70,18 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
-        public IActionResult ById(EnrollRouteData routeData)
+        public async Task<IActionResult> ById(EnrollRouteData routeData)
         {
             this.ViewBag.Error = routeData.ErrorMessage;
+            var user = await this.userManager.GetUserAsync(this.User);
+
             var viewModel = this.groupTripsService.GetById(routeData.Id);
+            viewModel.IsUserAdmin = await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName);
+            viewModel.IsUserCreator = this.groupTripsService.IsUserCreator(user.Id, routeData.Id);
+
             return this.View(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> Enroll(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);
@@ -96,6 +97,20 @@
             }
 
             return this.RedirectToAction(nameof(this.ById), new EnrollRouteData { Id = id });
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+
+            if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName)
+                && !this.groupTripsService.IsUserCreator(user.Id, id))
+            {
+                return this.Unauthorized();
+            }
+
+            await this.groupTripsService.Delete(id);
+            return this.RedirectToAction("Upcoming");
         }
     }
 }

@@ -16,5 +16,9 @@
         int GetUpcomingCount();
 
         Task EnrollUser(int id, string userId);
+
+        bool IsUserCreator(string userId, int groupTripId);
+
+        Task Delete(int groupTripId);
     }
 }

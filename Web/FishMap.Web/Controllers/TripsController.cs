@@ -1,6 +1,7 @@
 ﻿namespace FishMap.Web.Controllers
 {
     using System.Threading.Tasks;
+
     using FishMap.Common;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
@@ -9,6 +10,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class TripsController : BaseController
     {
         private const string AddFishActionName = "Create";
@@ -25,14 +27,12 @@
             this.userManager = userManager;
         }
 
-        [Authorize]
         public IActionResult Create()
         {
             return this.View();
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> Create(CreateTripInputModel input)
         {
             if (!this.ModelState.IsValid)
@@ -46,7 +46,6 @@
             return this.RedirectToAction(AddFishActionName, AddFishControllerName, tripToFishData);
         }
 
-        [Authorize]
         public IActionResult All(int id = 1)
         {
             if (id <= 0)
@@ -67,7 +66,6 @@
             return this.View(viewModel);
         }
 
-        [Authorize]
         public async Task<IActionResult> ById(int id)
         {
             var user = await this.userManager.GetUserAsync(this.User);

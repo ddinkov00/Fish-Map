@@ -139,5 +139,25 @@
             groupTrip.Guests.Add(userGroupTrip);
             await this.groupTripsRepository.SaveChangesAsync();
         }
+
+        public bool IsUserCreator(string userId, int groupTripId)
+        {
+            var tripUserId = this.groupTripsRepository.All()
+                .Where(t => t.Id == groupTripId)
+                .Select(t => t.HostId)
+                .FirstOrDefault();
+
+            return tripUserId == userId;
+        }
+
+        public async Task Delete(int groupTripId)
+        {
+            var trip = this.groupTripsRepository.All()
+                .Where(t => t.Id == groupTripId)
+                .FirstOrDefault();
+
+            this.groupTripsRepository.Delete(trip);
+            await this.groupTripsRepository.SaveChangesAsync();
+        }
     }
 }
