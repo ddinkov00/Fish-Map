@@ -9,6 +9,7 @@
     using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
 
+    [Authorize]
     public class CommentsController : Controller
     {
         private readonly ICommentService commentService;
@@ -23,12 +24,19 @@
         }
 
         [HttpPost]
-        [Authorize]
-        public async Task<IActionResult> Make(MakeCommentInputModel input)
+        public async Task<IActionResult> MakeInTrip(MakeCommentTripInputModel input)
         {
             var user = await this.userManager.GetUserAsync(this.User);
-            await this.commentService.Create(input.TripId, input.Content, user.Id);
+            await this.commentService.CreateForTrip(input.TripId, input.Content, user.Id);
             return this.RedirectToAction("ById", "Trips", new { id = input.TripId });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> MakeInGroupTrip(MakeCommentGrouptripInputModel input)
+        {
+            var user = await this.userManager.GetUserAsync(this.User);
+            await this.commentService.CreateForGroupTrip(input.GroupTripId, input.Content, user.Id);
+            return this.RedirectToAction("ById", "GroupTrips", new { id = input.GroupTripId });
         }
     }
 }

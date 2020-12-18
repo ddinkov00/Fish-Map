@@ -7,9 +7,13 @@
     {
         public string Content { get; set; }
 
-        public int TripId { get; set; }
+        public int? TripId { get; set; }
 
         public virtual Trip Trip { get; set; }
+
+        public int? GroupTripId { get; set; }
+
+        public virtual GroupTrip GroupTrip { get; set; }
 
         public string UserId { get; set; }
 

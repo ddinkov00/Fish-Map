@@ -21,7 +21,20 @@
             this.commentRepository = commentRepository;
         }
 
-        public async Task Create(int tripId, string content, string userId)
+        public async Task CreateForGroupTrip(int groupTripId, string content, string userId)
+        {
+            var comment = new Comment
+            {
+                Content = content,
+                GroupTripId = groupTripId,
+                UserId = userId,
+            };
+
+            await this.commentRepository.AddAsync(comment);
+            await this.commentRepository.SaveChangesAsync();
+        }
+
+        public async Task CreateForTrip(int tripId, string content, string userId)
         {
             var comment = new Comment
             {

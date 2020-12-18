@@ -1,8 +1,8 @@
 ﻿namespace FishMap.Web.ViewModels.Comments
 {
-    public class MakeCommentInputModel
+    public class MakeCommentGrouptripInputModel
     {
-        public int TripId { get; set; }
+        public int GroupTripId { get; set; }
 
         public string Content { get; set; }
     }

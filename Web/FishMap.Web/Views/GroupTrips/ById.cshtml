@@ -51,7 +51,7 @@
         </div>
         <hr class="alert-info" />
         <partial name="_ListUsersPartial" model="@Model" />
-        <div class="row mb-5">
+        <div class="row mb-2">
             <div class="col-md-9">
                 <ul class="list-group">
                     <li class="list-group-item d-flex justify-content-between align-items-center">
@@ -67,6 +67,45 @@
                     <a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-danger btn-lg">Изтрий</a>
                 }
             </div>
+        </div>
+        <hr class="alert-info mt-0 mb-0" />
+        <div class="row mt-2">
+            <h3>Коментари:</h3>
+        </div>
+        <div class="row mt-3" id="commentsDiv">
+            <table class="table table-dark table-responsive-sm table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Потребител:</th>
+                        <th scope="col">Коментар</th>
+                        <th scope="col">Дата: </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Comments.Count(); i++)
+                    {
+                        <tr>
+                            <th scope="row">@(i + 1)</th>
+                            <td>@Model.Comments.ElementAt(i).AddedByUsername</td>
+                            <td>@Model.Comments.ElementAt(i).Content</td>
+                            <td>@Model.Comments.ElementAt(i).CreatedOnString</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="makeCommentDiv">
+            <form asp-controller="Comments" asp-action="MakeInGroupTrip" method="post" class="row mb-5">
+                <input type="hidden" id="GroupTripId" name="GroupTripId" value="@Model.Id" />
+                <div class="form-group col-md-10">
+                    <label for="Content"></label>
+                    <textarea name="Content" id="Content" class="w-100 form-control"></textarea>
+                </div>
+                <div class="col-md-2 align-self-center">
+                    <input type="submit" class="btn btn-lg btn-success" value="+ Kоментар" />
+                </div>
+            </form>
         </div>
     </div>
 

@@ -11,6 +11,7 @@
         public GroupTrip()
         {
             this.Guests = new HashSet<UserGroupTrip>();
+            this.Comments = new HashSet<Comment>();
         }
 
         [Required]
@@ -49,5 +50,7 @@
         public virtual ApplicationUser Host { get; set; }
 
         public virtual ICollection<UserGroupTrip> Guests { get; set; }
+
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

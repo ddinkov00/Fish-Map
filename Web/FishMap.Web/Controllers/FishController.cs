@@ -70,7 +70,7 @@
                 }
             }
 
-            return this.Redirect("/");
+            return this.RedirectToAction("ById", "Trips", new { id = tripId });
         }
     }
 }

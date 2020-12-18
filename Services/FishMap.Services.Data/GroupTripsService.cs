@@ -10,6 +10,7 @@
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
     using FishMap.Web.ViewModels;
+    using FishMap.Web.ViewModels.Comments;
     using FishMap.Web.ViewModels.GroupTrips;
 
     public class GroupTripsService : IGroupTripsService
@@ -105,6 +106,13 @@
                         {
                             Id = x.GuestId,
                             Email = x.Guest.Email,
+                        }),
+                    Comments = gt.Comments
+                        .Select(c => new CommentViewModel
+                        {
+                            Content = c.Content,
+                            AddedByUserEmail = c.User.Email,
+                            CreatedOn = c.CreatedOn,
                         }),
                 }).FirstOrDefault();
         }

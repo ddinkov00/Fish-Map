@@ -1,5 +1,6 @@
 ﻿namespace FishMap.Web.ViewModels.GroupTrips
 {
+    using FishMap.Web.ViewModels.Comments;
     using System.Collections.Generic;
     using System.Linq;
 
@@ -43,5 +44,7 @@
         public int FreeSeats => this.AllSeats - this.GuestsCount;
 
         public IEnumerable<UserForGroupTripByIdViewModel> Guests { get; set; }
+
+        public IEnumerable<CommentViewModel> Comments { get; set; }
     }
 }

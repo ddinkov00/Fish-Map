@@ -15,7 +15,5 @@
         public DateTime CreatedOn { get; set; }
 
         public string CreatedOnString => this.CreatedOn.ToString("dd/MM/yyyy hh:mm tt");
-
-        public IEnumerable<CommentViewModel> Replies { get; set; }
     }
 }

@@ -7,7 +7,9 @@
 
     public interface ICommentService
     {
-        Task Create(int tripId, string content, string userId);
+        Task CreateForTrip(int tripId, string content, string userId);
+
+        Task CreateForGroupTrip(int groupTripId, string content, string userId);
 
         IEnumerable<CommentViewModel> GetComentsByTripId(int tripId);
 
