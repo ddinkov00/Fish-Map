@@ -61,20 +61,5 @@
 
             return comments;
         }
-
-        public IEnumerable<CommentViewModel> GetRepliesByParentId(int parentId)
-        {
-            var replies = this.commentRepository.AllAsNoTracking()
-                .Where(c => c.ParentId == parentId)
-                .OrderBy(c => c.CreatedOn)
-                .Select(c => new CommentViewModel
-                {
-                    Content = c.Content,
-                    CreatedOn = c.CreatedOn,
-                    AddedByUserEmail = c.User.Email,
-                }).ToList();
-
-            return replies;
-        }
     }
 }

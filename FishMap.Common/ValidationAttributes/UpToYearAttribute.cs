@@ -10,7 +10,7 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             value = (DateTime)value;
-            if (DateTime.Now.CompareTo(value) <= 0 && DateTime.Now.AddYears(+1).CompareTo(value) >= 0)
+            if (DateTime.UtcNow.CompareTo(value) <= 0 && DateTime.UtcNow.AddYears(+1).CompareTo(value) >= 0)
             {
                 return ValidationResult.Success;
             }

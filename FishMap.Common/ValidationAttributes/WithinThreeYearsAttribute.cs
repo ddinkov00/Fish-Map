@@ -8,7 +8,7 @@
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
             value = (DateTime)value;
-            if (DateTime.Now.AddYears(-3).CompareTo(value) <= 0 && DateTime.Now.CompareTo(value) >= 0)
+            if (DateTime.UtcNow.AddYears(-3).CompareTo(value) <= 0 && DateTime.UtcNow.CompareTo(value) >= 0)
             {
                 return ValidationResult.Success;
             }

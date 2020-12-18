@@ -12,7 +12,5 @@
         Task CreateForGroupTrip(int groupTripId, string content, string userId);
 
         IEnumerable<CommentViewModel> GetComentsByTripId(int tripId);
-
-        IEnumerable<CommentViewModel> GetRepliesByParentId(int parentId);
     }
 }
