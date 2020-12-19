@@ -1,9 +1,10 @@
 ﻿namespace FishMap.Services.Data
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
-
+    using FishMap.Common;
     using FishMap.Data.Common.Repositories;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
@@ -229,6 +230,11 @@
             var trip = this.tripsRepository.All()
                 .Where(t => t.Id == tripId)
                 .FirstOrDefault();
+
+            if (trip == null)
+            {
+                throw new NullReferenceException(GlobalConstants.NotFoundExceptionMessage);
+            }
 
             this.tripsRepository.Delete(trip);
             await this.tripsRepository.SaveChangesAsync();

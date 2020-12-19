@@ -50,12 +50,12 @@
             return this.Redirect("/");
         }*/
 
-        public IActionResult Privacy()
-        {
-            var groupTrips = this.db.Users.Select(u => u.GroupTripsHost.Where(gt => gt.WaterPoolName == "asfdasfd"));
+        //public IActionResult Privacy()
+        //{
+        //    var groupTrips = this.db.Users.Select(u => u.GroupTripsHost.Where(gt => gt.WaterPoolName == "asfdasfd"));
 
-            return this.View();
-        }
+        //    return this.View();
+        //}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

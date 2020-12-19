@@ -1,4 +1,6 @@
 ﻿@using Microsoft.Extensions.Configuration
+@using FishMap.Services
+@inject IFishingMethodService fishingMehthodService
 @inject IConfiguration configuration
 @model FishMap.Web.ViewModels.GroupTrips.GroupTripByIdViewModel
 @{
@@ -40,7 +42,7 @@
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <strong>Метод на риболов: </strong>
-                        <span>@Model.FishingMethod</span>
+                        <span>@fishingMehthodService.TranslateFishingmethod(Model.FishingMethod)</span>
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center">
                         <strong>Таргетиран вид риба: </strong>

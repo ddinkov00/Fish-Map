@@ -81,6 +81,7 @@
             services.AddTransient<IGroupTripsService, GroupTripsService>();
             services.AddTransient<ITownsService, TownsService>();
             services.AddTransient<ICommentService, CommentService>();
+            services.AddTransient<IFishingMethodService, FishingMethodService>();
 
             Account account = new Account(
                 this.configuration["Cloudinary:AppName"],

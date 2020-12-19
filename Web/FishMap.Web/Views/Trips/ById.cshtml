@@ -1,4 +1,6 @@
 ﻿@using Microsoft.Extensions.Configuration
+@using FishMap.Services
+@inject IFishingMethodService fishingmethodService
 @inject IConfiguration configuration
 @model FishMap.Web.ViewModels.Trips.TripByIdViewModel
 @{
@@ -16,7 +18,7 @@
                 <li class="list-group-item"><strong>Име на воден басейн: </strong>@Model.WaterPoolName</li>
                 <li class="list-group-item"><strong>Рибар: </strong>@Model.Username</li>
                 <li class="list-group-item"><strong>Дата: </strong>@Model.Date</li>
-                <li class="list-group-item"><strong>Метод на риболов: </strong>@Model.FishingMethod</li>
+                <li class="list-group-item"><strong>Метод на риболов: </strong>@fishingmethodService.TranslateFishingmethod(Model.FishingMethod)</li>
                 <li class="list-group-item"><strong>Описание: </strong>@Model.Description</li>
             </ul>
             @if (Model.IsUserCreator || Model.IsUserAdmin)

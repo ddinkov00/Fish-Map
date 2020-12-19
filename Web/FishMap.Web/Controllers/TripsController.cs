@@ -68,9 +68,14 @@
 
         public async Task<IActionResult> ById(int id)
         {
-            var user = await this.userManager.GetUserAsync(this.User);
-
             var viewModel = this.tripService.GetById(id);
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
+            var user = await this.userManager.GetUserAsync(this.User);
             viewModel.IsUserAdmin = await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName);
             viewModel.IsUserCreator = this.tripService.IsUserCreator(user.Id, id);
 
@@ -124,7 +129,14 @@
                 return this.Unauthorized();
             }
 
-            await this.tripService.Delete(id);
+            try
+            {
+                await this.tripService.Delete(id);
+            }
+            catch (System.NullReferenceException)
+            {
+                return this.NotFound();
+            }
 
             return this.RedirectToAction("All");
         }

@@ -37,6 +37,11 @@
         {
             var viewModel = this.fishSpeciesService.GetById(id);
 
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             return this.View(viewModel);
         }
     }

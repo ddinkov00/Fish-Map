@@ -2,6 +2,7 @@
 {
     using System;
     using System.Threading.Tasks;
+
     using FishMap.Common;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
@@ -76,6 +77,12 @@
             var user = await this.userManager.GetUserAsync(this.User);
 
             var viewModel = this.groupTripsService.GetById(routeData.Id);
+
+            if (viewModel == null)
+            {
+                return this.NotFound();
+            }
+
             viewModel.IsUserAdmin = await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName);
             viewModel.IsUserCreator = this.groupTripsService.IsUserCreator(user.Id, routeData.Id);
 
@@ -90,8 +97,13 @@
             {
                 await this.groupTripsService.EnrollUser(id, user.Id);
             }
-            catch (OperationCanceledException e)
+            catch (Exception e)
             {
+                if (e.Message == GlobalConstants.NotFoundExceptionMessage)
+                {
+                    return this.NotFound();
+                }
+
                 var errorMessage = e.Message;
                 return this.RedirectToAction(nameof(this.ById), new EnrollRouteData { Id = id, ErrorMessage = errorMessage });
             }
@@ -109,7 +121,15 @@
                 return this.Unauthorized();
             }
 
-            await this.groupTripsService.Delete(id);
+            try
+            {
+                await this.groupTripsService.Delete(id);
+            }
+            catch (NullReferenceException)
+            {
+                return this.NotFound();
+            }
+
             return this.RedirectToAction("Upcoming");
         }
 

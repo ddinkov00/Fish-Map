@@ -5,7 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
-
+    using FishMap.Common;
     using FishMap.Data.Common.Repositories;
     using FishMap.Data.Models;
     using FishMap.Services.Data.Contracts;
@@ -15,6 +15,10 @@
 
     public class GroupTripsService : IGroupTripsService
     {
+        private const string AlreadyEnrolledUserErrorMessage = "Вече сте записани за този излет!";
+        private const string HustUserTryingToEnrollerrorMessage = "Не може да се запишете за излет създаден от вас!";
+        private const string GroupTripFullErrorMessage = "Всички места за този излет вече са заети!";
+
         private readonly ITownsService townsService;
         private readonly IDeletableEntityRepository<GroupTrip> groupTripsRepository;
         private readonly IDeletableEntityRepository<UserGroupTrip> userGroupTripsRepository;
@@ -123,19 +127,24 @@
                 .Where(gt => gt.Id == id)
                 .FirstOrDefault();
 
+            if (groupTrip == null)
+            {
+                throw new NullReferenceException(GlobalConstants.NotFoundExceptionMessage);
+            }
+
             if (this.userGroupTripsRepository.AllAsNoTracking().Any(x => x.GroupTripId == id && x.GuestId == userId))
             {
-                throw new OperationCanceledException("Вече сте записани за този излет!");
+                throw new OperationCanceledException(AlreadyEnrolledUserErrorMessage);
             }
 
             if (groupTrip.HostId == userId)
             {
-                throw new OperationCanceledException("Не може да се запишете за излет създаден от вас!");
+                throw new OperationCanceledException(HustUserTryingToEnrollerrorMessage);
             }
 
             if (groupTrip.Guests.Count() + 1 > groupTrip.FreeSeats)
             {
-                throw new OperationCanceledException("Всички места за този излет вече са заети!");
+                throw new OperationCanceledException(GroupTripFullErrorMessage);
             }
 
             var userGroupTrip = new UserGroupTrip
@@ -163,6 +172,11 @@
             var trip = this.groupTripsRepository.All()
                 .Where(t => t.Id == groupTripId)
                 .FirstOrDefault();
+
+            if (trip == null)
+            {
+                throw new NullReferenceException(GlobalConstants.NotFoundExceptionMessage);
+            }
 
             this.groupTripsRepository.Delete(trip);
             await this.groupTripsRepository.SaveChangesAsync();

@@ -58,7 +58,7 @@
 
             foreach (var town in towns)
             {
-                var distance = (float)Math.Sqrt(Math.Pow(latitude - town.Latitude, 2) + Math.Pow(longtitude - town.Longtitude, 2));
+                var distance = this.CalculateDistanceBetweenLocationAndTown(latitude, longtitude, town.Latitude, town.Longtitude);
 
                 if (distance < minDistance)
                 {
@@ -68,6 +68,13 @@
             }
 
             return closestCityName;
+        }
+
+        private float CalculateDistanceBetweenLocationAndTown(float locationLatitude, float locationLongtitude, float townLatitude, float townLongtitude)
+        {
+            var distance = (float)Math.Sqrt(Math.Pow(locationLatitude - townLatitude, 2) + Math.Pow(locationLongtitude - townLongtitude, 2));
+
+            return distance;
         }
     }
 }

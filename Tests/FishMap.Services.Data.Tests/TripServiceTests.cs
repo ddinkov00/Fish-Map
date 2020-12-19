@@ -1556,7 +1556,7 @@
                 },
                 new Trip
                 {
-                    Id = 2,
+                    Id = 3,
                 },
             };
 
@@ -1585,7 +1585,7 @@
 
             await tripService.Delete(3);
             listCountAfterService = tripList.Count;
-            Assert.Equal(listCount - 1, listCountAfterService);
+            Assert.Equal(listCount - 2, listCountAfterService);
         }
     }
 }

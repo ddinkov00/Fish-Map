@@ -5,5 +5,7 @@
         public const string SystemName = "FishMap";
 
         public const string AdministratorRoleName = "Administrator";
+
+        public const string NotFoundExceptionMessage = "Item not found!";
     }
 }
