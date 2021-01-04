@@ -13,9 +13,6 @@
     [Authorize]
     public class TripsController : BaseController
     {
-        private const string AddFishActionName = "Create";
-        private const string AddFishControllerName = "Fish";
-
         private readonly ITripsService tripService;
         private readonly UserManager<ApplicationUser> userManager;
 
@@ -43,7 +40,7 @@
             var user = await this.userManager.GetUserAsync(this.User);
             var tripToFishData = await this.tripService.CreateAsync(input, user.Id);
 
-            return this.RedirectToAction(AddFishActionName, AddFishControllerName, tripToFishData);
+            return this.RedirectToAction(nameof(FishController.Create), nameof(FishController).Replace("Controller", string.Empty), tripToFishData);
         }
 
         public IActionResult All(int id = 1)
@@ -138,7 +135,7 @@
                 return this.NotFound();
             }
 
-            return this.RedirectToAction("All");
+            return this.RedirectToAction(nameof(this.All));
         }
     }
 }

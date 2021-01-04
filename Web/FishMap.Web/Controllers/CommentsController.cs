@@ -28,7 +28,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
             await this.commentService.CreateForTrip(input.TripId, input.Content, user.Id);
-            return this.RedirectToAction("ById", "Trips", new { id = input.TripId });
+            return this.RedirectToAction(nameof(TripsController.ById), nameof(TripsController).Replace("Controller", string.Empty), new { id = input.TripId });
         }
 
         [HttpPost]
@@ -36,7 +36,7 @@
         {
             var user = await this.userManager.GetUserAsync(this.User);
             await this.commentService.CreateForGroupTrip(input.GroupTripId, input.Content, user.Id);
-            return this.RedirectToAction("ById", "GroupTrips", new { id = input.GroupTripId });
+            return this.RedirectToAction(nameof(TripsController.ById), nameof(GroupTripsController).Replace("Controller", string.Empty), new { id = input.GroupTripId });
         }
     }
 }

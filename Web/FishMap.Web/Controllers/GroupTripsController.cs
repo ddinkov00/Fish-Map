@@ -130,7 +130,7 @@
                 return this.NotFound();
             }
 
-            return this.RedirectToAction("Upcoming");
+            return this.RedirectToAction(nameof(this.Upcoming));
         }
 
         public IActionResult OrderBy(string order, int id = 1)

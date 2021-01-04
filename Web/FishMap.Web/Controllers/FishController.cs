@@ -70,7 +70,7 @@
                 }
             }
 
-            return this.RedirectToAction("ById", "Trips", new { id = tripId });
+            return this.RedirectToAction(nameof(TripsController.ById), nameof(TripsController).Replace("Controller", string.Empty), new { id = tripId });
         }
     }
 }
